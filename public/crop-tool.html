@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Doctor Image Crop Tool</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      background: #0f172a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: system-ui, sans-serif;
+      color: #e2e8f0;
+      gap: 28px;
+      padding: 40px 20px;
+    }
+    h1 { font-size: 1.4rem; font-weight: 600; color: #7dd3fc; letter-spacing: -0.02em; }
+    p.hint { font-size: 0.82rem; color: #94a3b8; text-align: center; max-width: 340px; }
+
+    /* Circle — exactly matches sm:w-44 (176px) with border-4 (4px) */
+    #frame {
+      width: 176px;
+      height: 176px;
+      border-radius: 50%;
+      border: 4px solid rgba(255,255,255,0.2);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      cursor: grab;
+      user-select: none;
+      flex-shrink: 0;
+      background-repeat: no-repeat;
+      background-image: url('/vivek_sir_trial.png');
+    }
+    #frame:active { cursor: grabbing; }
+
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      width: 100%;
+      max-width: 340px;
+    }
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 0.78rem;
+      color: #94a3b8;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    input[type=range] {
+      width: 100%;
+      accent-color: #38bdf8;
+      cursor: pointer;
+    }
+
+    .output {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 16px 20px;
+      width: 100%;
+      max-width: 340px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.78rem;
+      color: #7dd3fc;
+      line-height: 1.9;
+    }
+    .output .label {
+      font-size: 0.7rem;
+      color: #475569;
+      font-family: system-ui, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+      display: block;
+    }
+    #copy-btn {
+      width: 100%;
+      max-width: 340px;
+      padding: 12px;
+      background: #0ea5e9;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    #copy-btn:hover { background: #0284c7; }
+    #copy-btn.copied { background: #16a34a; }
+  </style>
+</head>
+<body>
+
+  <h1>🩺 Doctor Image Crop Tool</h1>
+  <p class="hint">Drag inside the circle to reposition · Use the slider to zoom · Values copy directly to the website</p>
+
+  <div id="frame"></div>
+
+  <div class="controls">
+    <label>
+      Zoom (background-size)
+      <input type="range" id="zoom" min="100" max="300" value="150" step="1" />
+    </label>
+  </div>
+
+  <div class="output">
+    <span class="label">Paste these into DoctorSection.jsx style prop</span>
+    <div id="output-text"></div>
+  </div>
+  <button id="copy-btn">Copy Values</button>
+
+<script>
+  const frame   = document.getElementById('frame');
+  const zoomEl  = document.getElementById('zoom');
+  const outputEl= document.getElementById('output-text');
+  const copyBtn = document.getElementById('copy-btn');
+
+  // State: background-position as percentages (0–100 each axis)
+  // 50% 50% = centred
+  let posX = 40; // %
+  let posY = 10; // %
+  let zoom = 150; // background-size %
+
+  let dragging = false;
+  let startMouseX, startMouseY, startPosX, startPosY;
+
+  function apply() {
+    frame.style.backgroundSize = `${zoom}%`;
+    frame.style.backgroundPosition = `${posX.toFixed(1)}% ${posY.toFixed(1)}%`;
+
+    outputEl.innerHTML =
+      `backgroundSize: <span style="color:#fbbf24">'${zoom}%'</span>,<br>` +
+      `backgroundPosition: <span style="color:#fbbf24">'${posX.toFixed(1)}% ${posY.toFixed(1)}%'</span>,`;
+  }
+
+  // Convert a pixel drag delta to a % change in background-position.
+  // CSS background-position % formula:
+  //   offset_px = posX% * (containerW - imageW) / 100
+  // So: Δ posX% = Δ offset_px / (containerW - imageW) * 100
+  function pxToPosPct(deltaPx, axis) {
+    const containerSize = 176; // px (matches sm:w-44)
+    const imageSize = containerSize * zoom / 100;
+    const range = containerSize - imageSize; // negative when image > container
+    if (range === 0) return 0;
+    return (deltaPx / range) * 100;
+  }
+
+  // Mouse drag
+  frame.addEventListener('mousedown', e => {
+    dragging = true;
+    startMouseX = e.clientX; startMouseY = e.clientY;
+    startPosX = posX; startPosY = posY;
+    e.preventDefault();
+  });
+  window.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    posX = startPosX + pxToPosPct(e.clientX - startMouseX, 'x');
+    posY = startPosY + pxToPosPct(e.clientY - startMouseY, 'y');
+    posX = Math.max(-200, Math.min(300, posX));
+    posY = Math.max(-200, Math.min(300, posY));
+    apply();
+  });
+  window.addEventListener('mouseup', () => { dragging = false; });
+
+  // Touch drag
+  frame.addEventListener('touchstart', e => {
+    dragging = true;
+    startMouseX = e.touches[0].clientX; startMouseY = e.touches[0].clientY;
+    startPosX = posX; startPosY = posY;
+    e.preventDefault();
+  }, { passive: false });
+  window.addEventListener('touchmove', e => {
+    if (!dragging) return;
+    posX = startPosX + pxToPosPct(e.touches[0].clientX - startMouseX, 'x');
+    posY = startPosY + pxToPosPct(e.touches[0].clientY - startMouseY, 'y');
+    posX = Math.max(-200, Math.min(300, posX));
+    posY = Math.max(-200, Math.min(300, posY));
+    apply();
+  });
+  window.addEventListener('touchend', () => { dragging = false; });
+
+  // Zoom slider
+  zoomEl.addEventListener('input', () => {
+    zoom = parseInt(zoomEl.value);
+    apply();
+  });
+
+  // Copy
+  copyBtn.addEventListener('click', () => {
+    const text =
+      `backgroundSize: '${zoom}%',\n` +
+      `backgroundPosition: '${posX.toFixed(1)}% ${posY.toFixed(1)}%',`;
+    navigator.clipboard.writeText(text).then(() => {
+      copyBtn.textContent = '✓ Copied!';
+      copyBtn.classList.add('copied');
+      setTimeout(() => {
+        copyBtn.textContent = 'Copy Values';
+        copyBtn.classList.remove('copied');
+      }, 2000);
+    });
+  });
+
+  apply();
+</script>
+</body>
+</html>
