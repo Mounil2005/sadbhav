@@ -1,0 +1,188 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Base ─────────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply font-body text-warm-800 bg-white;
+    line-height: 1.65;
+    font-feature-settings: 'kern' 1, 'liga' 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  /* Branded text selection */
+  ::selection {
+    background-color: #bfdbfe;
+    color: #0f2244;
+  }
+
+  /* Refined focus — only on keyboard navigation */
+  :focus {
+    outline: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid #1e5fa8;
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Minimum touch target size (WCAG AA) */
+  button, [role="button"], a {
+    min-height: 24px;
+  }
+
+  /* Smooth image rendering */
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Prevent text overflow */
+  p, li, span {
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+}
+
+/* ─── Components ────────────────────────────────────────────── */
+@layer components {
+  .section-label {
+    @apply text-xs font-sans font-semibold tracking-widest2 uppercase text-medical-500 mb-3;
+  }
+
+  .section-heading {
+    @apply font-display text-3xl md:text-4xl lg:text-5xl font-semibold text-navy-700;
+  }
+
+  .section-subheading {
+    @apply text-lg text-warm-500 font-body font-normal leading-relaxed max-w-2xl;
+  }
+
+  /* ── Buttons ── */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-7 py-3.5
+           bg-medical-500 text-white font-sans font-medium text-sm tracking-wide
+           rounded-full transition-all duration-200
+           hover:bg-medical-600 hover:shadow-lg hover:-translate-y-0.5
+           active:translate-y-0 active:scale-[0.98]
+           focus-visible:ring-2 focus-visible:ring-medical-400 focus-visible:ring-offset-2;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center gap-2 px-7 py-3.5
+           border border-medical-500 text-medical-500 font-sans font-medium text-sm tracking-wide
+           rounded-full transition-all duration-200
+           hover:bg-medical-500 hover:text-white hover:-translate-y-0.5
+           active:scale-[0.98]
+           focus-visible:ring-2 focus-visible:ring-medical-400 focus-visible:ring-offset-2;
+  }
+
+  .btn-emergency {
+    @apply inline-flex items-center gap-2 px-7 py-3.5
+           bg-crimson-500 text-white font-sans font-medium text-sm tracking-wide
+           rounded-full transition-all duration-200
+           hover:bg-crimson-600 hover:shadow-lg hover:-translate-y-0.5
+           active:scale-[0.98]
+           focus-visible:ring-2 focus-visible:ring-crimson-400 focus-visible:ring-offset-2;
+  }
+
+  /* ── Cards ── */
+  .card-base {
+    @apply bg-white rounded-2xl shadow-card border border-warm-100
+           transition-all duration-300
+           hover:shadow-card-hover hover:-translate-y-1;
+  }
+
+  /* ── Navigation ── */
+  .nav-link {
+    @apply text-sm font-sans font-medium text-warm-600
+           hover:text-medical-500 transition-colors duration-200;
+  }
+
+  /* ── Form inputs ── */
+  .form-input {
+    @apply w-full px-4 py-3.5 rounded-xl
+           border border-warm-200 bg-white
+           text-sm font-sans text-warm-800 placeholder-warm-300
+           transition-all duration-150
+           focus:outline-none focus:border-medical-400 focus:ring-2 focus:ring-medical-100;
+  }
+
+  /* ── Section divider accent ── */
+  .section-divider {
+    @apply w-12 h-0.5 rounded;
+    background: linear-gradient(90deg, #1e5fa8, #c0392b);
+  }
+
+  /* ── Skip navigation (accessibility) ── */
+  .skip-nav {
+    @apply absolute top-4 left-4 z-[200]
+           px-4 py-2 rounded-lg
+           bg-medical-500 text-white text-sm font-sans font-semibold
+           -translate-y-20 opacity-0 pointer-events-none
+           transition-all duration-150;
+  }
+
+  .skip-nav:focus-visible {
+    @apply translate-y-0 opacity-100 pointer-events-auto;
+  }
+}
+
+/* ─── Utilities ─────────────────────────────────────────────── */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* Prevent layout paint during lazy-load reveal */
+  .will-reveal {
+    will-change: transform, opacity;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+}
+
+/* ─── Scrollbar ─────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #f5f5f4; }
+::-webkit-scrollbar-thumb { background: #1e5fa8; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #152f58; }
+
+/* ─── Reduced motion ────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

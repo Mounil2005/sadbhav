@@ -1,0 +1,160 @@
+import { Phone, Mail, MapPin, ArrowRight } from 'lucide-react'
+import { getIcon } from '../utils/icons'
+import {
+  SITE,
+  SOCIAL_LINKS,
+  FOOTER_QUICK_LINKS,
+  FOOTER_LEGAL_LINKS,
+} from '../data/site'
+import { SERVICES } from '../data/services'
+
+export default function Footer() {
+  const footerServices = SERVICES.map((s) => ({ label: s.title, href: `#services` }))
+
+  return (
+    <footer className="bg-navy-900 text-white">
+      {/* Emergency banner */}
+      <div className="bg-crimson-500">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+              <Phone size={16} strokeWidth={2} className="text-white" />
+            </div>
+            <div>
+              <span className="font-sans font-bold text-white text-sm">24/7 Emergency Line: </span>
+              <a href={SITE.phoneHref} className="font-sans font-bold text-white hover:underline">
+                {SITE.phone}
+              </a>
+            </div>
+          </div>
+          <a
+            href={SITE.whatsappHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-5 py-2 bg-white text-crimson-600 rounded-full text-sm font-sans font-semibold hover:bg-crimson-50 transition-colors"
+          >
+            WhatsApp Us <ArrowRight size={14} />
+          </a>
+        </div>
+      </div>
+
+      {/* Main footer grid */}
+      <div className="max-w-7xl mx-auto px-6 py-16">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+
+          {/* Brand */}
+          <div>
+            <div className="mb-5">
+              <img
+                src="/sadbhav_transparent.png"
+                alt={SITE.name}
+                className="h-10 w-auto object-contain brightness-0 invert"
+              />
+            </div>
+            <p className="text-white/50 text-sm font-body leading-relaxed mb-6">
+              {SITE.description}
+            </p>
+            <div className="flex gap-3">
+              {SOCIAL_LINKS.map(({ platform, icon, href }) => {
+                const Icon = getIcon(icon)
+                return (
+                  <a
+                    key={platform}
+                    href={href}
+                    aria-label={platform}
+                    className="w-9 h-9 rounded-lg bg-white/8 flex items-center justify-center hover:bg-medical-500 transition-colors border border-white/10"
+                  >
+                    {Icon && <Icon size={16} strokeWidth={1.8} className="text-white/60" />}
+                  </a>
+                )
+              })}
+            </div>
+          </div>
+
+          {/* Quick links */}
+          <FooterLinkList heading="Quick Links" links={FOOTER_QUICK_LINKS} />
+
+          {/* Services */}
+          <FooterLinkList heading="Our Services" links={footerServices} />
+
+          {/* Contact */}
+          <div>
+            <div className="text-xs font-sans font-semibold tracking-widest2 uppercase text-white/40 mb-5">
+              Contact
+            </div>
+            <div className="space-y-4">
+              <FooterContactRow icon={<MapPin size={16} strokeWidth={1.8} className="text-medical-400" />}>
+                <div className="text-white/80 text-sm font-sans">{SITE.name}</div>
+                <div className="text-white/40 text-xs mt-0.5 leading-relaxed whitespace-pre-line">
+                  {SITE.address.display}
+                </div>
+              </FooterContactRow>
+
+              <FooterContactRow icon={<Phone size={16} strokeWidth={1.8} className="text-medical-400" />}>
+                <a href={SITE.phoneHref} className="text-white/80 text-sm font-sans hover:text-white transition-colors">
+                  {SITE.phone}
+                </a>
+                <div className="text-white/40 text-xs mt-0.5">Emergency 24/7</div>
+              </FooterContactRow>
+
+              <FooterContactRow icon={<Mail size={16} strokeWidth={1.8} className="text-medical-400" />}>
+                <a href={`mailto:${SITE.email}`} className="text-white/80 text-sm font-sans hover:text-white transition-colors">
+                  {SITE.email}
+                </a>
+              </FooterContactRow>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom bar */}
+      <div className="border-t border-white/8">
+        <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-sans text-white/30">
+          <span>&copy; {SITE.year} {SITE.name}. All rights reserved.</span>
+          <div className="flex gap-5">
+            {FOOTER_LEGAL_LINKS.map(({ label, href }) => (
+              <a key={label} href={href} className="hover:text-white/60 transition-colors">
+                {label}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </footer>
+  )
+}
+
+function FooterLinkList({ heading, links }) {
+  return (
+    <div>
+      <div className="text-xs font-sans font-semibold tracking-widest2 uppercase text-white/40 mb-5">
+        {heading}
+      </div>
+      <ul className="space-y-3">
+        {links.map(({ label, href }) => (
+          <li key={label}>
+            <a
+              href={href}
+              className="text-sm text-white/60 hover:text-white font-sans transition-colors flex items-center gap-2 group"
+            >
+              <ArrowRight
+                size={12}
+                className="text-medical-400 opacity-0 group-hover:opacity-100 transition-opacity"
+              />
+              {label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+function FooterContactRow({ icon, children }) {
+  return (
+    <div className="flex gap-3">
+      <div className="flex-shrink-0 mt-0.5">{icon}</div>
+      <div>{children}</div>
+    </div>
+  )
+}
