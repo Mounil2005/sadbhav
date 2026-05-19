@@ -3,7 +3,7 @@ export const SITE = {
   shortName: 'Sadbhav',
   tagline: 'Advanced Pulmonary & Critical Care',
   description:
-    'Advanced pulmonary and critical care for patients and families in Ahmedabad. Trusted, compassionate, and modern healthcare.',
+    'Advanced pulmonary and critical care for patients and families in Jamnagar. Trusted, compassionate, and modern healthcare.',
   phone: '+91 93130 43422',
   phoneHref: 'tel:+919313043422',
   whatsappHref: 'https://wa.me/919313043422?text=Hello%2C%20I%20would%20like%20to%20book%20an%20appointment%20at%20Sadbhav%20Hospital.',
