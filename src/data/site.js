@@ -22,7 +22,7 @@ export const SITE = {
 
 export const VISITING_HOURS = [
   { day: 'Monday – Saturday', time: '10:00 AM – 2:30 PM\n6:00 PM – 9:30 PM', timeShort: '10 AM – 9:30 PM', isEmergency: false },
-  { day: 'Sunday', time: 'Closed', timeShort: 'Closed', isClosed: true, isEmergency: false },
+  { day: 'Sunday', time: 'Emergency Only', timeShort: 'Emergency', isClosed: false, isEmergency: true },
   { day: 'Emergency', time: '24 Hours / 7 Days', timeShort: '24 / 7', isEmergency: true },
 ]
 
@@ -55,7 +55,6 @@ export const SOCIAL_PROOF_STATS = [
 ]
 
 export const TRUST_BADGES = [
-  { icon: 'Shield', label: 'NABH Compliant', sub: 'Quality Standards' },
   { icon: 'Award', label: 'Expert Care', sub: 'Specialist Doctors' },
   { icon: 'Heart', label: 'Patient First', sub: 'Compassionate Care' },
 ]
