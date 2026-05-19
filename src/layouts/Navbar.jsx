@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Phone, Menu, X, ChevronDown } from 'lucide-react'
 import { useScrollPosition } from '../hooks/useScrollPosition'
 import { NAV_LINKS } from '../data/navigation'
-import { SITE, VISITING_HOURS } from '../data/site'
+import { SITE } from '../data/site'
 import { cn } from '../utils/cn'
 
 export default function Navbar() {
@@ -10,8 +10,6 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState(null)
 
-  const weekdayHours = VISITING_HOURS[0]
-  const sundayHours = VISITING_HOURS[1]
 
   function closeMobile() {
     setMobileOpen(false)
@@ -24,23 +22,6 @@ export default function Navbar() {
         Skip to main content
       </a>
 
-      {/* Top info bar */}
-      <div className="hidden md:block bg-navy-800 text-white">
-        <div className="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between text-xs font-sans">
-          <div className="flex items-center gap-4 lg:gap-6 text-warm-300">
-            <span>Mon – Sat: {weekdayHours.timeShort}</span>
-            <span className="w-px h-3 bg-warm-600" aria-hidden="true" />
-            <span>Sun: {sundayHours.timeShort}</span>
-          </div>
-          <a
-            href={SITE.phoneHref}
-            className="px-4 py-1.5 bg-crimson-500 text-white rounded-full text-xs font-medium hover:bg-crimson-600 transition-colors focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-1"
-            aria-label={`Call us at ${SITE.phone}`}
-          >
-            {SITE.phone}
-          </a>
-        </div>
-      </div>
 
       {/* Main nav */}
       <nav
@@ -119,11 +100,11 @@ export default function Navbar() {
             <div className="flex items-center gap-2 md:gap-3">
               <a
                 href={SITE.phoneHref}
-                className="hidden md:flex items-center gap-2 px-3.5 py-2 rounded-full border border-crimson-500 text-crimson-500 text-sm font-medium hover:bg-crimson-50 transition-colors"
-                aria-label="Emergency line"
+                className="hidden md:flex items-center gap-2 px-3.5 py-2 rounded-full border border-warm-200 text-warm-700 text-sm font-medium hover:bg-warm-50 hover:border-medical-300 hover:text-medical-600 transition-colors"
+                aria-label={`Call us at ${SITE.phone}`}
               >
                 <Phone size={14} strokeWidth={2} aria-hidden="true" />
-                <span className="hidden xl:inline">Emergency</span>
+                <span>{SITE.phone}</span>
               </a>
               <button
                 className="lg:hidden p-2 rounded-lg text-warm-600 hover:bg-warm-50 transition-colors"
