@@ -72,6 +72,6 @@ export const BLOG_ARTICLES = [
 export const BLOG_CONTENT = {
   sectionLabel: 'Health Awareness',
   heading: 'Insights for Better Health',
-  viewAllLabel: 'View all articles',
-  viewAllHref: '#blog',
+  viewAllLabel: 'View all',
+  viewAllHref: '/health-tips',
 }

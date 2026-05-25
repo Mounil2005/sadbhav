@@ -1,4 +1,4 @@
-import { Phone, MessageCircle, MapPin, Clock, Gift } from 'lucide-react'
+import { Phone, MessageCircle, MapPin, Clock } from 'lucide-react'
 import SectionHeader from '../components/ui/SectionHeader'
 import RevealWrapper from '../components/ui/RevealWrapper'
 import { SITE, VISITING_HOURS } from '../data/site'
@@ -92,32 +92,37 @@ export default function ContactSection() {
                   <span className="text-white font-sans font-semibold text-sm">Visiting Hours</span>
                 </div>
                 <dl className="space-y-2 sm:space-y-3">
-                  {VISITING_HOURS.map(({ day, time, isEmergency, isClosed }) => (
+                  {VISITING_HOURS.map(({ day, time, isEmergency, isClosed, isOutreach, outreach }) => (
                     <div
                       key={day}
-                      className="flex justify-between items-start py-1.5 sm:py-2 border-b border-white/10 last:border-0"
+                      className={`py-1.5 sm:py-2 border-b border-white/10 last:border-0 ${outreach ? '' : 'flex justify-between items-start'}`}
                     >
-                      <dt className="text-white/60 text-xs sm:text-sm font-sans">{day}</dt>
-                      <dd className={`text-xs sm:text-sm font-sans font-medium text-right whitespace-pre-line ${isEmergency ? 'text-crimson-300' : isClosed ? 'text-white/40' : 'text-white'}`}>
-                        {time}
-                      </dd>
+                      <dt className="text-white/60 text-xs sm:text-sm font-sans mb-1">{day}</dt>
+                      {outreach ? (
+                        <dd className="space-y-1.5 pl-1">
+                          {outreach.map(({ week, places }) => (
+                            <div key={week}>
+                              <span className="text-[10px] font-sans font-semibold text-white/40 uppercase tracking-wider">{week} Sunday</span>
+                              {places.map(({ name, time: t }) => (
+                                <div key={name} className="flex justify-between items-baseline gap-3 mt-0.5">
+                                  <span className="text-xs font-sans text-white/80">{name}</span>
+                                  <span className="text-xs font-sans text-white whitespace-nowrap">{t}</span>
+                                </div>
+                              ))}
+                            </div>
+                          ))}
+                        </dd>
+                      ) : (
+                        <dd className={`text-xs sm:text-sm font-sans font-medium text-right whitespace-pre-line ${isEmergency ? 'text-crimson-300' : isClosed ? 'text-white/40' : 'text-white'}`}>
+                          {time}
+                        </dd>
+                      )}
                     </div>
                   ))}
                 </dl>
               </div>
 
-              {/* Friday free consultation callout */}
-              <div className="flex items-start gap-3 bg-amber-50 border border-amber-200 rounded-2xl p-4 sm:p-5">
-                <div className="w-9 h-9 rounded-xl bg-amber-100 flex items-center justify-center flex-shrink-0">
-                  <Gift size={16} strokeWidth={1.8} className="text-amber-600" aria-hidden="true" />
-                </div>
-                <div>
-                  <div className="font-sans font-semibold text-amber-800 text-sm">Free Consultation: Every Friday</div>
-                  <div className="text-amber-600 text-xs mt-0.5 leading-relaxed">
-                    New patients receive a complimentary consultation every Friday. Walk in or book in advance.
-                  </div>
-                </div>
-              </div>
+
             </div>
           </RevealWrapper>
 

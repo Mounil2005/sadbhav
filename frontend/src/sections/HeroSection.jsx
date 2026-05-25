@@ -39,7 +39,6 @@ export default function HeroSection() {
             <div className="space-y-6 sm:space-y-8">
               {/* Pill badge */}
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-medical-50 border border-medical-100 rounded-full">
-                <span className="w-1.5 h-1.5 rounded-full bg-medical-500 animate-pulse" aria-hidden="true" />
                 <span className="text-[11px] sm:text-xs font-sans font-semibold text-medical-600 tracking-widest uppercase">
                   {SITE.tagline}
                 </span>
@@ -172,12 +171,8 @@ export default function HeroSection() {
                 className="absolute -right-8 xl:-right-10 bottom-16 bg-white rounded-2xl shadow-premium p-4 min-w-[152px] border border-warm-100"
                 aria-label="ICU and step-down unit, active 24/7"
               >
-                <div className="flex items-center gap-2 mb-2">
-                  <div className="w-2 h-2 rounded-full bg-emerald-400" aria-hidden="true" />
-                  <span className="text-xs font-sans text-emerald-600 font-semibold">Active</span>
-                </div>
                 <div className="text-sm font-sans font-semibold text-navy-700">ICU & Step-Down</div>
-                <div className="text-xs text-warm-400 mt-0.5">24/7 Critical Care</div>
+                <div className="text-xs text-warm-400 mt-0.5">Advanced Critical Care</div>
               </div>
 
               {/* Floating stat — bottom left */}

@@ -16,20 +16,45 @@ export const SITE = {
     pin: '361005',
     display: '"Central Point", 4th Floor, Above SBI Bank,\nSummair Club Road, Jamnagar – 361005',
   },
+  googleReviewUrl: 'https://www.google.com/maps/search/?api=1&query=Sadbhav+Hospital+Dr+Vivek+Nanda+Jamnagar',
   mapEmbedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3687.031286193394!2d70.05771627479758!3d22.465458579568246!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39576b2cb5285cd1%3A0x8977bbd3f6c2a63!2sSADBHAV%20HOSPITAL%20CHEST%20PHYSICIAN%20IN%20JAMNGAR%20DR%20VIVEK%20NANDA!5e0!3m2!1sen!2sin!4v1779120384892!5m2!1sen!2sin',
   year: new Date().getFullYear(),
 }
 
 export const VISITING_HOURS = [
   { day: 'Monday – Saturday', time: '10:00 AM – 2:30 PM\n6:00 PM – 9:30 PM', timeShort: '10 AM – 9:30 PM', isEmergency: false },
-  { day: 'Sunday', time: 'Emergency Only', timeShort: 'Emergency', isClosed: false, isEmergency: true },
+  {
+    day: 'Sunday',
+    timeShort: 'Outreach',
+    isClosed: false,
+    isEmergency: false,
+    isOutreach: true,
+    outreach: [
+      { week: '2nd', places: [{ name: 'Khambhalia', time: '11:00 AM – 1:30 PM' }] },
+      { week: '3rd', places: [{ name: 'Jamjodhpur', time: '9:00 – 11:00 AM' }, { name: 'Bhanvad', time: '11:30 AM – 1:30 PM' }] },
+    ],
+  },
   { day: 'Emergency', time: '24 Hours / 7 Days', timeShort: '24 / 7', isEmergency: true },
 ]
 
+export const OUTREACH_SCHEDULE = [
+  {
+    week: '2nd Sunday',
+    visits: [
+      { location: 'Khambhalia', time: '11:00 AM – 1:30 PM' },
+    ],
+  },
+  {
+    week: '3rd Sunday',
+    visits: [
+      { location: 'Jamjodhpur', time: '9:00 AM – 11:00 AM' },
+      { location: 'Bhanvad', time: '11:30 AM – 1:30 PM' },
+    ],
+  },
+]
+
 export const SOCIAL_LINKS = [
-  { platform: 'Facebook', icon: 'Facebook', href: '#' },
-  { platform: 'Instagram', icon: 'Instagram', href: '#' },
-  { platform: 'Youtube', icon: 'Youtube', href: '#' },
+  { platform: 'Instagram', icon: 'Instagram', href: 'https://www.instagram.com/sadbhavhospital_dr.vivek/' },
 ]
 
 export const FOOTER_QUICK_LINKS = [
