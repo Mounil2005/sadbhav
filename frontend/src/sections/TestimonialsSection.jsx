@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Quote, ExternalLink } from 'lucide-react'
+import { ExternalLink } from 'lucide-react'
 import StarRating from '../components/ui/StarRating'
 import SectionHeader from '../components/ui/SectionHeader'
 import RevealWrapper from '../components/ui/RevealWrapper'
@@ -9,9 +9,9 @@ import { fetchApprovedReviews } from '../lib/queries'
 import { submitReview } from '../lib/sanityWrite'
 import { notifyAdminOfReview } from '../lib/emailNotify'
 
-function GoogleIcon({ className = '' }) {
+function GoogleIcon() {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" className={className}>
+    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
       <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
       <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
       <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/>
@@ -20,38 +20,54 @@ function GoogleIcon({ className = '' }) {
   )
 }
 
-function TestimonialCard({ name, location, condition, review, rating, verified, imageUrl }) {
+function VerifiedBadge() {
   return (
-    <article className="card-base bg-white flex flex-col gap-3 sm:gap-4 relative overflow-hidden">
-      {verified && (
-        <div className="absolute top-3 right-3 z-10 inline-flex items-center gap-1 bg-green-50 text-green-600 text-[10px] font-sans font-semibold px-2 py-1 rounded-full border border-green-100">
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
-            <circle cx="5" cy="5" r="5" fill="#22c55e" />
-            <path d="M2.5 5l1.8 1.8 3.2-3.2" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          Verified
-        </div>
-      )}
+    <div className="inline-flex items-center gap-1 bg-green-50 text-green-600 text-[10px] font-sans font-semibold px-2 py-1 rounded-full border border-green-100 flex-shrink-0">
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+        <circle cx="5" cy="5" r="5" fill="#22c55e" />
+        <path d="M2.5 5l1.8 1.8 3.2-3.2" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+      Verified
+    </div>
+  )
+}
+
+function ReviewItem({ name, condition, review, rating, verified, imageUrl, reply }) {
+  return (
+    <article className="bg-white rounded-2xl border border-warm-100 shadow-sm overflow-hidden">
       {imageUrl && (
-        <div className="w-full h-36 overflow-hidden">
-          <img
-            src={imageUrl}
-            alt={`Photo from ${name}`}
-            loading="lazy"
-            className="w-full h-full object-cover"
-          />
+        <div className="w-full h-48 overflow-hidden">
+          <img src={imageUrl} alt={`Photo from ${name}`} loading="lazy" className="w-full h-full object-cover" />
         </div>
       )}
-      <div className="px-6 pb-6 flex flex-col gap-3 sm:gap-4 flex-1">
-        <Quote size={22} strokeWidth={1.5} className="text-medical-200 flex-shrink-0" aria-hidden="true" />
-        <p className="text-warm-600 text-sm leading-relaxed flex-1 text-pretty">{review}</p>
-        <StarRating count={rating} />
-        <div className="w-full h-px bg-warm-100" aria-hidden="true" />
-        <div>
-          <div className="font-sans font-semibold text-navy-700 text-sm">{name}</div>
-          <div className="text-xs text-warm-400 mt-0.5">{location}</div>
-          <div className="text-xs text-medical-500 mt-1 font-medium">{condition}</div>
+      <div className="p-5 sm:p-6">
+        {/* Stars + verified */}
+        <div className="flex items-center justify-between gap-2 mb-3">
+          <StarRating count={rating} />
+          {verified && <VerifiedBadge />}
         </div>
+
+        {/* Review text */}
+        <p className="text-warm-600 text-sm leading-relaxed mb-4 text-pretty">"{review}"</p>
+
+        {/* Patient info */}
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-full bg-medical-100 flex items-center justify-center text-medical-600 font-sans font-bold text-sm flex-shrink-0">
+            {name?.[0]?.toUpperCase()}
+          </div>
+          <div>
+            <div className="font-sans font-semibold text-navy-700 text-sm">{name}</div>
+            {condition && <div className="text-xs text-medical-500 mt-0.5">{condition}</div>}
+          </div>
+        </div>
+
+        {/* Hospital reply */}
+        {reply && (
+          <div className="mt-4 border-l-2 border-medical-300 pl-4 py-1">
+            <div className="font-sans font-bold text-navy-800 text-xs mb-1">Sadbhav Hospital</div>
+            <p className="text-warm-500 text-xs leading-relaxed">{reply}</p>
+          </div>
+        )}
       </div>
     </article>
   )
@@ -150,7 +166,7 @@ function ReviewForm({ onSubmitted }) {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-warm-200 bg-warm-50 text-sm font-sans font-medium text-warm-600 hover:border-[#4285F4] hover:text-[#4285F4] transition-colors self-start sm:self-auto"
             >
-              <GoogleIcon className="text-[#4285F4]" />
+              <GoogleIcon />
               Review on Google
               <ExternalLink size={12} />
             </a>
@@ -171,12 +187,7 @@ function ReviewForm({ onSubmitted }) {
                 Your Name <span className="text-crimson-500">*</span>
               </label>
               <input
-                id="r-name"
-                name="name"
-                type="text"
-                value={form.name}
-                onChange={handleChange}
-                required
+                id="r-name" name="name" type="text" value={form.name} onChange={handleChange} required
                 placeholder="e.g. Ramesh Patel"
                 className="w-full px-4 py-2.5 rounded-xl border border-warm-200 bg-warm-50 text-sm text-navy-700 placeholder:text-warm-300 focus:outline-none focus:ring-2 focus:ring-medical-300 transition"
               />
@@ -186,11 +197,7 @@ function ReviewForm({ onSubmitted }) {
                 Treated For <span className="text-warm-400 font-normal">(optional)</span>
               </label>
               <input
-                id="r-condition"
-                name="condition"
-                type="text"
-                value={form.condition}
-                onChange={handleChange}
+                id="r-condition" name="condition" type="text" value={form.condition} onChange={handleChange}
                 placeholder="e.g. Asthma, COPD"
                 className="w-full px-4 py-2.5 rounded-xl border border-warm-200 bg-warm-50 text-sm text-navy-700 placeholder:text-warm-300 focus:outline-none focus:ring-2 focus:ring-medical-300 transition"
               />
@@ -202,18 +209,12 @@ function ReviewForm({ onSubmitted }) {
               Your Review <span className="text-crimson-500">*</span>
             </label>
             <textarea
-              id="r-review"
-              name="reviewText"
-              value={form.reviewText}
-              onChange={handleChange}
-              required
-              rows={3}
+              id="r-review" name="reviewText" value={form.reviewText} onChange={handleChange} required rows={3}
               placeholder="Tell us about your visit and the care you received..."
               className="w-full px-4 py-2.5 rounded-xl border border-warm-200 bg-warm-50 text-sm text-navy-700 placeholder:text-warm-300 focus:outline-none focus:ring-2 focus:ring-medical-300 transition resize-none"
             />
           </div>
 
-          {/* Image upload */}
           <div>
             <label className="block text-sm font-sans font-semibold text-navy-700 mb-1.5">
               Add a Photo <span className="text-warm-400 font-normal">(optional)</span>
@@ -270,18 +271,18 @@ export default function TestimonialsSection({
     ? realReviews.map((r) => ({
         id: r._id,
         name: r.name,
-        location: '',
         condition: r.condition ?? '',
         review: r.reviewText,
         rating: r.rating,
         verified: r.verified ?? false,
         imageUrl: r.imageUrl ?? null,
+        reply: r.reply ?? null,
       }))
     : TESTIMONIALS
 
   function handleNewReview(data) {
     setRealReviews((prev) => [
-      { _id: `temp-${Date.now()}`, ...data, verified: false },
+      { _id: `temp-${Date.now()}`, ...data, verified: false, reply: null },
       ...prev,
     ])
   }
@@ -301,10 +302,10 @@ export default function TestimonialsSection({
           </div>
         </RevealWrapper>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
-          {displayed.map((testimonial, i) => (
-            <RevealWrapper key={testimonial.id} delay={i * 70}>
-              <TestimonialCard {...testimonial} />
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+          {displayed.map((item, i) => (
+            <RevealWrapper key={item.id} delay={i * 70}>
+              <ReviewItem {...item} />
             </RevealWrapper>
           ))}
         </div>
