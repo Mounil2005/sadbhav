@@ -52,6 +52,18 @@ export const review = defineType({
       initialValue: false,
     }),
     defineField({
+      name: 'reply',
+      title: 'Hospital Reply',
+      type: 'text',
+      rows: 3,
+      description: 'Your response to this review. Will appear on the website under the patient review.',
+    }),
+    defineField({
+      name: 'repliedAt',
+      title: 'Replied At',
+      type: 'datetime',
+    }),
+    defineField({
       name: 'submittedAt',
       title: 'Submitted At',
       type: 'datetime',

@@ -125,6 +125,8 @@ const APPROVED_REVIEWS_QUERY = `
     condition,
     verified,
     "imageUrl": image.asset->url,
+    reply,
+    repliedAt,
     submittedAt,
   }
 `
