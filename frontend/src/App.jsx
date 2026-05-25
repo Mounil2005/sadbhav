@@ -1,7 +1,11 @@
 import { useEffect } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { getCalApi } from '@calcom/embed-react'
 import RootLayout from './layouts/RootLayout'
 import HomePage from './pages/HomePage'
+import BlogPostPage from './pages/BlogPostPage'
+import HealthTipsPage from './pages/HealthTipsPage'
+import ReviewPage from './pages/ReviewPage'
 
 export default function App() {
   useEffect(() => {
@@ -20,8 +24,13 @@ export default function App() {
   }, [])
 
   return (
-    <RootLayout>
-      <HomePage />
-    </RootLayout>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<RootLayout><HomePage /></RootLayout>} />
+        <Route path="/health-tips" element={<RootLayout><HealthTipsPage /></RootLayout>} />
+        <Route path="/review" element={<ReviewPage />} />
+        <Route path="/blog/:slug" element={<RootLayout><BlogPostPage /></RootLayout>} />
+      </Routes>
+    </BrowserRouter>
   )
 }

@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react'
+import { useSEO } from '../hooks/useSEO'
 import HeroSection from '../sections/HeroSection'
 import HighlightsSection from '../sections/HighlightsSection'
 import AboutSection from '../sections/AboutSection'
@@ -7,15 +9,20 @@ import FacilitiesSection from '../sections/FacilitiesSection'
 import BlogSection from '../sections/BlogSection'
 import TestimonialsSection from '../sections/TestimonialsSection'
 import ContactSection from '../sections/ContactSection'
+import { fetchHealthUpdates, BLOG_CONTENT } from '../lib/queries'
 
-/*
- * Data is currently imported by default inside each section from src/data/.
- * To integrate a CMS or API, fetch data here and pass it as props:
- *
- *   const { data: services } = useSWR('/api/services', fetcher)
- *   <ServicesSection services={services} />
- */
 export default function HomePage() {
+  useSEO({
+    title: 'Advanced Pulmonary & Critical Care, Jamnagar',
+    description: 'Sadbhav Hospital offers expert pulmonary, respiratory and critical care in Jamnagar. Trusted care by Dr. Vivek Nanda — book your appointment today.',
+  })
+
+  const [healthUpdates, setHealthUpdates] = useState(null)
+
+  useEffect(() => {
+    fetchHealthUpdates().then(setHealthUpdates)
+  }, [])
+
   return (
     <>
       <HeroSection />
@@ -24,7 +31,7 @@ export default function HomePage() {
       <ServicesSection />
       <DoctorSection />
       <FacilitiesSection />
-      <BlogSection />
+      <BlogSection articles={healthUpdates ?? undefined} content={BLOG_CONTENT} />
       <TestimonialsSection />
       <ContactSection />
     </>

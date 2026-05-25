@@ -1,4 +1,3 @@
-import { ArrowRight } from 'lucide-react'
 import { getIcon } from '../utils/icons'
 import SectionHeader from '../components/ui/SectionHeader'
 import RevealWrapper from '../components/ui/RevealWrapper'
@@ -59,30 +58,12 @@ export default function ServicesSection({
                     {service.description}
                   </p>
 
-                  <div className="flex items-center gap-2 text-sm font-sans font-medium group-hover:gap-3 transition-all duration-200 text-medical-500">
-                    Learn more
-                    <ArrowRight size={14} strokeWidth={2} aria-hidden="true" />
-                  </div>
                 </div>
               </RevealWrapper>
             )
           })}
         </div>
 
-        {/* CTA strip */}
-        <RevealWrapper delay={100}>
-          <div className="mt-8 sm:mt-12 bg-white rounded-2xl sm:rounded-3xl border border-warm-100 shadow-card p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
-            <div>
-              <h3 className="font-display font-semibold text-lg sm:text-xl text-navy-700 mb-1">
-                {content.cta.heading}
-              </h3>
-              <p className="text-warm-500 text-sm">{content.cta.sub}</p>
-            </div>
-            <a href={content.cta.href} className="btn-primary flex-shrink-0">
-              {content.cta.label}
-            </a>
-          </div>
-        </RevealWrapper>
       </div>
     </section>
   )
