@@ -41,25 +41,27 @@ function ReviewItem({ name, condition, review, rating, verified, imageUrl, reply
         </div>
       )}
       <div className="p-5 sm:p-6">
-        {/* Stars + verified */}
+        {/* Patient info — top like Google */}
         <div className="flex items-center justify-between gap-2 mb-3">
-          <StarRating count={rating} />
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-full bg-medical-100 flex items-center justify-center text-medical-600 font-sans font-bold text-sm flex-shrink-0">
+              {name?.[0]?.toUpperCase()}
+            </div>
+            <div>
+              <div className="font-sans font-semibold text-navy-700 text-sm">{name}</div>
+              {condition && <div className="text-xs text-medical-500 mt-0.5">{condition}</div>}
+            </div>
+          </div>
           {verified && <VerifiedBadge />}
         </div>
 
-        {/* Review text */}
-        <p className="text-warm-600 text-sm leading-relaxed mb-4 text-pretty">"{review}"</p>
-
-        {/* Patient info */}
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-full bg-medical-100 flex items-center justify-center text-medical-600 font-sans font-bold text-sm flex-shrink-0">
-            {name?.[0]?.toUpperCase()}
-          </div>
-          <div>
-            <div className="font-sans font-semibold text-navy-700 text-sm">{name}</div>
-            {condition && <div className="text-xs text-medical-500 mt-0.5">{condition}</div>}
-          </div>
+        {/* Stars */}
+        <div className="mb-3">
+          <StarRating count={rating} />
         </div>
+
+        {/* Review text */}
+        <p className="text-warm-600 text-sm leading-relaxed text-pretty">"{review}"</p>
 
         {/* Hospital reply */}
         {reply && (
