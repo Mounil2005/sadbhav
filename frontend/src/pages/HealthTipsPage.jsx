@@ -76,13 +76,13 @@ function PostCard({ article }) {
       className="group bg-white rounded-2xl border border-warm-100 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden flex flex-col"
     >
       {/* Fixed-height thumbnail */}
-      <div className="overflow-hidden aspect-video bg-warm-100 relative">
+      <div className="overflow-hidden aspect-video bg-warm-50 relative">
         {article.coverImageUrl ? (
           <img
             src={article.coverImageUrl}
             alt={article.title}
             loading="lazy"
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
