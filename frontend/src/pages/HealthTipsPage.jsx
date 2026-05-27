@@ -13,43 +13,46 @@ function CategoryBadge({ category }) {
 
 function FeaturedPost({ article }) {
   const isVideo = article.contentType === 'video'
+  const hasImage = !!article.coverImageUrl
+
   return (
     <a
       href={`/blog/${article.slug}`}
-      className="group grid md:grid-cols-2 bg-white rounded-2xl sm:rounded-3xl border border-warm-100 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden mb-8 sm:mb-10"
+      className={`group bg-white rounded-2xl sm:rounded-3xl border border-warm-100 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden mb-8 sm:mb-10 ${hasImage ? 'grid md:grid-cols-2' : 'block'}`}
     >
-      {/* Image */}
-      <div className="relative overflow-hidden bg-warm-100 min-h-[220px] md:min-h-[320px]">
-        {article.coverImageUrl ? (
+      {/* Image — only rendered if available */}
+      {hasImage && (
+        <div className="relative overflow-hidden min-h-[220px] md:min-h-[320px]">
           <img
             src={article.coverImageUrl}
             alt={article.title}
             loading="eager"
             className="w-full h-full object-cover absolute inset-0 group-hover:scale-105 transition-transform duration-500"
           />
-        ) : (
-          <div className="absolute inset-0 bg-gradient-to-br from-medical-100 to-medical-200 flex items-center justify-center">
-            {isVideo && <Play size={40} className="text-medical-400" />}
-          </div>
-        )}
-        {isVideo && (
-          <div className="absolute top-4 left-4 inline-flex items-center gap-1.5 bg-navy-900/80 text-white text-[11px] font-sans font-medium px-3 py-1.5 rounded-full backdrop-blur-sm">
-            <Play size={10} fill="white" /> Video
-          </div>
-        )}
-      </div>
+          {isVideo && (
+            <div className="absolute top-4 left-4 inline-flex items-center gap-1.5 bg-navy-900/80 text-white text-[11px] font-sans font-medium px-3 py-1.5 rounded-full backdrop-blur-sm">
+              <Play size={10} fill="white" /> Video
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Content */}
-      <div className="p-7 sm:p-8 flex flex-col justify-center">
+      <div className={`flex flex-col justify-center ${hasImage ? 'p-7 sm:p-8' : 'p-8 sm:p-10'}`}>
         <div className="flex items-center gap-2 mb-4">
           <CategoryBadge category={article.category} />
-          <span className="text-[10px] font-sans text-warm-400 bg-warm-100 px-2.5 py-1 rounded-full">Featured</span>
+          <span className="text-[10px] font-sans text-warm-400 bg-warm-100 px-2.5 py-1 rounded-full">Latest</span>
+          {isVideo && !hasImage && (
+            <span className="inline-flex items-center gap-1 text-[10px] font-sans font-medium px-2.5 py-1 rounded-full bg-navy-50 text-navy-500">
+              <Play size={8} /> Video
+            </span>
+          )}
         </div>
-        <h2 className="font-display font-bold text-xl sm:text-2xl text-navy-800 leading-snug mb-3 text-balance">
+        <h2 className={`font-display font-bold text-navy-800 leading-snug mb-3 text-balance ${hasImage ? 'text-xl sm:text-2xl' : 'text-2xl sm:text-3xl'}`}>
           {article.title}
         </h2>
         {article.excerpt && (
-          <p className="text-warm-500 text-sm leading-relaxed line-clamp-3 mb-5">
+          <p className="text-warm-500 text-sm leading-relaxed line-clamp-3 mb-5 max-w-2xl">
             {article.excerpt}
           </p>
         )}
@@ -76,13 +79,13 @@ function PostCard({ article }) {
       className="group bg-white rounded-2xl border border-warm-100 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden flex flex-col"
     >
       {/* Fixed-height thumbnail */}
-      <div className="overflow-hidden aspect-video bg-warm-50 relative">
+      <div className="overflow-hidden aspect-square bg-warm-100 relative">
         {article.coverImageUrl ? (
           <img
             src={article.coverImageUrl}
             alt={article.title}
             loading="lazy"
-            className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
