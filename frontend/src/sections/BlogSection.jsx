@@ -1,7 +1,9 @@
+import { useState } from 'react'
 import { ArrowRight, Clock, Play } from 'lucide-react'
 import SectionHeader from '../components/ui/SectionHeader'
 import HospitalImage from '../components/ui/HospitalImage'
 import RevealWrapper from '../components/ui/RevealWrapper'
+import ReelModal from '../components/ui/ReelModal'
 import { BLOG_ARTICLES, BLOG_CONTENT } from '../data/blog'
 
 function getYouTubeId(url) {
@@ -10,13 +12,13 @@ function getYouTubeId(url) {
   return m ? m[1] : null
 }
 
-function ReelPreviewCard({ reel }) {
+function ReelPreviewCard({ reel, onClick }) {
   const ytId = getYouTubeId(reel.videoUrl)
 
   return (
-    <a
-      href={`/blog/${reel.slug}`}
-      className="group flex-shrink-0 w-36 sm:w-40 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow block"
+    <button
+      onClick={onClick}
+      className="group flex-shrink-0 w-44 sm:w-48 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow text-left"
     >
       <div className="relative bg-navy-900" style={{ aspectRatio: '9/16' }}>
         {/* thumbnail absolutely fills the box so video/img can't escape */}
@@ -38,7 +40,7 @@ function ReelPreviewCard({ reel }) {
           <p className="text-white text-[11px] font-display font-semibold leading-snug line-clamp-2">{reel.title}</p>
         </div>
       </div>
-    </a>
+    </button>
   )
 }
 
@@ -182,12 +184,15 @@ export default function BlogSection({
   reels = [],
   content = BLOG_CONTENT,
 }) {
+  const [modalIndex, setModalIndex] = useState(null)
+
   const featured = articles.find((a) => a.featured) ?? articles[0]
   const secondary = articles.filter((a) => a.id !== featured?.id).slice(0, 3)
 
   if (!featured && reels.length === 0) return null
 
   return (
+    <>
     <section id="blog" className="py-20 sm:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
 
@@ -242,9 +247,9 @@ export default function BlogSection({
               <div
                 className="flex gap-3 overflow-x-auto pb-3 snap-x snap-mandatory -mx-4 sm:-mx-6 px-4 sm:px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
               >
-                {reels.map((reel) => (
+                {reels.map((reel, i) => (
                   <div key={reel.id} className="snap-start">
-                    <ReelPreviewCard reel={reel} />
+                    <ReelPreviewCard reel={reel} onClick={() => setModalIndex(i)} />
                   </div>
                 ))}
               </div>
@@ -254,5 +259,16 @@ export default function BlogSection({
 
       </div>
     </section>
+
+    {modalIndex !== null && reels.length > 0 && (
+      <ReelModal
+        reels={reels}
+        index={modalIndex}
+        onClose={() => setModalIndex(null)}
+        onPrev={() => setModalIndex((i) => Math.max(0, i - 1))}
+        onNext={() => setModalIndex((i) => Math.min(reels.length - 1, i + 1))}
+      />
+    )}
+  </>
   )
 }
