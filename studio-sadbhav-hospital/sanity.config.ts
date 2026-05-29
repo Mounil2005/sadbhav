@@ -40,9 +40,19 @@ export default defineConfig({
                       .child(
                         S.documentTypeList('healthUpdate')
                           .title('Blog')
-                          .filter('_type == "healthUpdate" && coalesce(featured, false) == false')
+                          .filter('_type == "healthUpdate" && coalesce(featured, false) == false && contentType != "reel"')
                           .initialValueTemplates([
                             S.initialValueTemplateItem('healthUpdate-blog'),
+                          ]),
+                      ),
+                    S.listItem()
+                      .title('📱 Reels')
+                      .child(
+                        S.documentTypeList('healthUpdate')
+                          .title('Reels')
+                          .filter('_type == "healthUpdate" && contentType == "reel"')
+                          .initialValueTemplates([
+                            S.initialValueTemplateItem('healthUpdate-reel'),
                           ]),
                       ),
                   ]),
@@ -72,6 +82,12 @@ export default defineConfig({
         title: 'Blog Post',
         schemaType: 'healthUpdate',
         value: {featured: false},
+      },
+      {
+        id: 'healthUpdate-reel',
+        title: 'Reel / Short',
+        schemaType: 'healthUpdate',
+        value: {contentType: 'reel', featured: false},
       },
     ],
   },
