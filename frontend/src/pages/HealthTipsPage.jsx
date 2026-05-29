@@ -30,20 +30,16 @@ function ArticleCard({ article }) {
       href={`/blog/${article.slug}`}
       className="group bg-white rounded-2xl border border-warm-100 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden flex flex-col"
     >
-      <div className="overflow-hidden aspect-video bg-warm-100 relative">
-        {article.coverImageUrl ? (
+      {article.coverImageUrl && (
+        <div className="overflow-hidden aspect-video bg-warm-100">
           <img
             src={article.coverImageUrl}
             alt={article.title}
             loading="lazy"
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-medical-50 to-medical-100">
-            <div className="w-8 h-0.5 bg-medical-200 rounded-full" />
-          </div>
-        )}
-      </div>
+        </div>
+      )}
 
       <div className="p-4 flex flex-col flex-1">
         <div className="mb-2">
