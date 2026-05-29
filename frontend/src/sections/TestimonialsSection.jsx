@@ -331,12 +331,29 @@ export default function TestimonialsSection({
           </div>
         </RevealWrapper>
 
-        <div className="flex gap-4 overflow-x-auto pb-3 snap-x snap-mandatory -mx-4 sm:-mx-6 px-4 sm:px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          {displayed.map((item) => (
-            <div key={item.id} className="snap-start flex-shrink-0 w-72 sm:w-80">
-              <ReviewItem {...item} />
-            </div>
-          ))}
+        <div className="overflow-hidden -mx-4 sm:-mx-6">
+          <style>{`
+            @keyframes reviews-scroll {
+              0% { transform: translateX(0); }
+              100% { transform: translateX(-50%); }
+            }
+            .reviews-track {
+              animation: reviews-scroll 40s linear infinite;
+            }
+            .reviews-track:hover {
+              animation-play-state: paused;
+            }
+          `}</style>
+          <div
+            className="reviews-track flex gap-4 px-4 sm:px-6 pb-3"
+            style={{ width: 'max-content' }}
+          >
+            {[...displayed, ...displayed].map((item, i) => (
+              <div key={`${item.id}-${i}`} className="flex-shrink-0 w-72 sm:w-80">
+                <ReviewItem {...item} />
+              </div>
+            ))}
+          </div>
         </div>
 
         <ReviewForm onSubmitted={handleNewReview} />
