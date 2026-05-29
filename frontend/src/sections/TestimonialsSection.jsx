@@ -369,7 +369,7 @@ export default function TestimonialsSection({
             role="list"
             aria-label="Hospital statistics"
           >
-            {[...stats, { value: visitorCount ? `${visitorCount.toLocaleString()}+` : '...', label: 'Site Visitors' }].map(({ value, label }) => (
+            {[...stats, { value: visitorCount ? visitorCount.toLocaleString() : '...', label: 'Site Visitors' }].map(({ value, label }) => (
               <div
                 key={label}
                 role="listitem"
