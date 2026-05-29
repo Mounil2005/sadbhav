@@ -32,7 +32,17 @@ function VerifiedBadge() {
   )
 }
 
-function ReviewItem({ name, condition, review, rating, verified, imageUrl, reply }) {
+function GoogleBadge() {
+  return (
+    <div className="inline-flex items-center gap-1 bg-blue-50 text-[10px] font-sans font-semibold px-2 py-1 rounded-full border border-blue-100 flex-shrink-0">
+      <GoogleIcon />
+      <span className="text-blue-600">Google</span>
+    </div>
+  )
+}
+
+function ReviewItem({ name, condition, review, rating, verified, imageUrl, reply, source, profilePhotoUrl }) {
+  const isGoogle = source === 'google'
   return (
     <article className="bg-white rounded-2xl border border-warm-100 shadow-sm overflow-hidden">
       {imageUrl && (
@@ -41,29 +51,29 @@ function ReviewItem({ name, condition, review, rating, verified, imageUrl, reply
         </div>
       )}
       <div className="p-5 sm:p-6">
-        {/* Patient info — top like Google */}
         <div className="flex items-center justify-between gap-2 mb-3">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-full bg-medical-100 flex items-center justify-center text-medical-600 font-sans font-bold text-sm flex-shrink-0">
-              {name?.[0]?.toUpperCase()}
-            </div>
+            {profilePhotoUrl ? (
+              <img src={profilePhotoUrl} alt={name} className="w-9 h-9 rounded-full object-cover flex-shrink-0" referrerPolicy="no-referrer" />
+            ) : (
+              <div className="w-9 h-9 rounded-full bg-medical-100 flex items-center justify-center text-medical-600 font-sans font-bold text-sm flex-shrink-0">
+                {name?.[0]?.toUpperCase()}
+              </div>
+            )}
             <div>
               <div className="font-sans font-semibold text-navy-700 text-sm">{name}</div>
-              {condition && <div className="text-xs text-medical-500 mt-0.5">{condition}</div>}
+              {condition && <div className="text-xs text-warm-400 mt-0.5">{condition}</div>}
             </div>
           </div>
-          {verified && <VerifiedBadge />}
+          {isGoogle ? <GoogleBadge /> : verified ? <VerifiedBadge /> : null}
         </div>
 
-        {/* Stars */}
         <div className="mb-3">
           <StarRating count={rating} />
         </div>
 
-        {/* Review text */}
         <p className="text-warm-600 text-sm leading-relaxed text-pretty">"{review}"</p>
 
-        {/* Hospital reply */}
         {reply && (
           <div className="mt-4 border-l-2 border-medical-300 pl-4 py-1">
             <div className="font-sans font-bold text-navy-800 text-xs mb-1">Sadbhav Hospital</div>
@@ -259,31 +269,48 @@ function ReviewForm({ onSubmitted }) {
   )
 }
 
+async function fetchGoogleReviews() {
+  try {
+    const res = await fetch('/api/google-reviews')
+    if (!res.ok) return []
+    const data = await res.json()
+    return data.reviews ?? []
+  } catch {
+    return []
+  }
+}
+
 export default function TestimonialsSection({
   content = TESTIMONIALS_CONTENT,
   stats = SOCIAL_PROOF_STATS,
 }) {
-  const [realReviews, setRealReviews] = useState([])
+  const [sanityReviews, setSanityReviews] = useState([])
+  const [googleReviews, setGoogleReviews] = useState([])
 
   useEffect(() => {
-    fetchApprovedReviews().then(setRealReviews)
+    fetchApprovedReviews().then(setSanityReviews)
+    fetchGoogleReviews().then(setGoogleReviews)
   }, [])
 
-  const displayed = realReviews.length > 0
-    ? realReviews.map((r) => ({
-        id: r._id,
-        name: r.name,
-        condition: r.condition ?? '',
-        review: r.reviewText,
-        rating: r.rating,
-        verified: r.verified ?? false,
-        imageUrl: r.imageUrl ?? null,
-        reply: r.reply ?? null,
-      }))
-    : TESTIMONIALS
+  const sanityMapped = sanityReviews.map((r) => ({
+    id: r._id,
+    name: r.name,
+    condition: r.condition ?? '',
+    review: r.reviewText,
+    rating: r.rating,
+    verified: r.verified ?? false,
+    imageUrl: r.imageUrl ?? null,
+    reply: r.reply ?? null,
+    source: 'sanity',
+    profilePhotoUrl: null,
+  }))
+
+  const allReviews = [...sanityMapped, ...googleReviews]
+
+  const displayed = allReviews.length > 0 ? allReviews : TESTIMONIALS
 
   function handleNewReview(data) {
-    setRealReviews((prev) => [
+    setSanityReviews((prev) => [
       { _id: `temp-${Date.now()}`, ...data, verified: false, reply: null },
       ...prev,
     ])
