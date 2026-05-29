@@ -73,54 +73,57 @@ function FeaturedPost({ article }) {
 
 function PostCard({ article }) {
   const isVideo = article.contentType === 'video'
+  const hasImage = !!article.coverImageUrl
+
   return (
     <a
       href={`/blog/${article.slug}`}
       className="group bg-white rounded-2xl border border-warm-100 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden flex flex-col"
     >
-      {/* Fixed-height thumbnail */}
-      <div className="overflow-hidden aspect-square bg-warm-100 relative">
-        {article.coverImageUrl ? (
+      {/* Portrait thumbnail — tall card, image fills naturally */}
+      {hasImage ? (
+        <div className="overflow-hidden aspect-[3/4] relative">
           <img
             src={article.coverImageUrl}
             alt={article.title}
             loading="lazy"
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            {isVideo
-              ? <Play size={28} className="text-warm-300" />
-              : <div className="w-8 h-0.5 bg-warm-200 rounded-full" />}
-          </div>
-        )}
-        {isVideo && (
-          <div className="absolute top-3 left-3 inline-flex items-center gap-1 bg-navy-900/80 text-white text-[10px] font-sans font-medium px-2.5 py-1 rounded-full">
-            <Play size={8} fill="white" /> Video
-          </div>
-        )}
-      </div>
-
-      <div className="p-5 flex flex-col flex-1">
-        <div className="mb-3">
-          <CategoryBadge category={article.category} />
-        </div>
-        <h3 className="font-display font-semibold text-base text-navy-800 leading-snug mb-2 flex-1 text-balance">
-          {article.title}
-        </h3>
-        {article.excerpt && (
-          <p className="text-warm-500 text-xs leading-relaxed line-clamp-2 mb-4">
-            {article.excerpt}
-          </p>
-        )}
-        <div className="flex items-center justify-between mt-auto pt-3 border-t border-warm-100">
-          <time className="text-[11px] text-warm-400 font-sans">{article.displayDate}</time>
-          <div className="flex items-center gap-1 text-xs font-sans font-semibold text-medical-500 group-hover:gap-2 transition-all">
-            {isVideo ? 'Watch' : 'Read'}
-            <ArrowRight size={12} strokeWidth={2} />
+          {isVideo && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-full bg-black/50 flex items-center justify-center backdrop-blur-sm">
+                <Play size={20} fill="white" className="text-white ml-0.5" />
+              </div>
+            </div>
+          )}
+          <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/60 to-transparent p-4">
+            <CategoryBadge category={article.category} />
+            <h3 className="font-display font-semibold text-sm text-white leading-snug mt-2 line-clamp-2">
+              {article.title}
+            </h3>
+            <time className="text-[10px] text-white/60 font-sans mt-1 block">{article.displayDate}</time>
           </div>
         </div>
-      </div>
+      ) : (
+        /* No image — text card */
+        <div className="p-5 flex flex-col flex-1 min-h-[200px]">
+          <div className="mb-3">
+            <CategoryBadge category={article.category} />
+          </div>
+          <h3 className="font-display font-semibold text-base text-navy-800 leading-snug mb-2 flex-1 text-balance">
+            {article.title}
+          </h3>
+          {article.excerpt && (
+            <p className="text-warm-500 text-xs leading-relaxed line-clamp-3 mb-4">{article.excerpt}</p>
+          )}
+          <div className="flex items-center justify-between mt-auto pt-3 border-t border-warm-100">
+            <time className="text-[11px] text-warm-400 font-sans">{article.displayDate}</time>
+            <div className="flex items-center gap-1 text-xs font-sans font-semibold text-medical-500 group-hover:gap-2 transition-all">
+              {isVideo ? 'Watch' : 'Read'} <ArrowRight size={12} strokeWidth={2} />
+            </div>
+          </div>
+        </div>
+      )}
     </a>
   )
 }
@@ -187,7 +190,7 @@ export default function HealthTipsPage() {
           <>
             <FeaturedPost article={featured} />
             {rest.length > 0 && (
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
                 {rest.map((article) => (
                   <PostCard key={article.id} article={article} />
                 ))}
