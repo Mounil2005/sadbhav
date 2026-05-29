@@ -286,10 +286,15 @@ export default function TestimonialsSection({
 }) {
   const [sanityReviews, setSanityReviews] = useState([])
   const [googleReviews, setGoogleReviews] = useState([])
+  const [visitorCount, setVisitorCount] = useState(null)
 
   useEffect(() => {
     fetchApprovedReviews().then(setSanityReviews)
     fetchGoogleReviews().then(setGoogleReviews)
+    fetch('/api/visit')
+      .then((r) => r.json())
+      .then((d) => setVisitorCount(d.count))
+      .catch(() => {})
   }, [])
 
   const sanityMapped = sanityReviews.map((r) => ({
@@ -360,19 +365,15 @@ export default function TestimonialsSection({
 
         <RevealWrapper delay={80}>
           <div
-            className="mt-8 sm:mt-12 grid grid-cols-2 md:grid-cols-4 bg-white rounded-2xl sm:rounded-3xl border border-warm-100 shadow-card overflow-hidden"
+            className="mt-8 sm:mt-12 grid grid-cols-2 md:grid-cols-5 bg-warm-100 rounded-2xl sm:rounded-3xl border border-warm-100 shadow-card overflow-hidden gap-px"
             role="list"
             aria-label="Hospital statistics"
           >
-            {stats.map(({ value, label }, i) => (
+            {[...stats, { value: visitorCount ? `${visitorCount.toLocaleString()}+` : '...', label: 'Site Visitors' }].map(({ value, label }) => (
               <div
                 key={label}
                 role="listitem"
-                className={[
-                  'px-5 sm:px-8 py-5 sm:py-7 text-center',
-                  i < stats.length - 1 ? 'border-r border-warm-100' : '',
-                  i < 2 ? 'border-b md:border-b-0 border-warm-100' : '',
-                ].filter(Boolean).join(' ')}
+                className="bg-white px-4 sm:px-6 py-5 sm:py-7 text-center"
               >
                 <div className="font-display font-bold text-2xl sm:text-3xl text-medical-500">{value}</div>
                 <div className="text-[10px] sm:text-xs text-warm-400 font-sans mt-1 sm:mt-1.5">{label}</div>
