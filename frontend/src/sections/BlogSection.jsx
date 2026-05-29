@@ -144,6 +144,7 @@ export default function BlogSection({
   content = BLOG_CONTENT,
 }) {
   const featured = articles.find((a) => a.featured) ?? articles[0]
+  if (!featured) return null
   const secondary = articles.filter((a) => a.id !== featured?.id).slice(0, 3)
 
   return (
