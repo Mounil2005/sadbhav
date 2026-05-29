@@ -164,7 +164,7 @@ export default function ReelModal({ reels, index, onClose, onPrev, onNext }) {
           className="absolute inset-x-0 bottom-0 transition-transform duration-300 ease-in-out"
           style={{ transform: panelOpen ? 'translateY(0)' : 'translateY(100%)' }}
         >
-          <div className="bg-black/95 rounded-t-2xl max-h-[70vh] flex flex-col">
+          <div className="bg-black/95 rounded-t-2xl max-h-[55vh] flex flex-col">
             {/* Handle + collapse button */}
             <button
               onClick={() => setPanelOpen(false)}
