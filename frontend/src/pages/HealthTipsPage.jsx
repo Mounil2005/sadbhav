@@ -91,7 +91,7 @@ function ReelThumbnail({ article }) {
         preload="metadata"
         muted
         playsInline
-        className="w-full h-full object-cover"
+        style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
       />
     )
   }
@@ -110,8 +110,8 @@ function ReelCard({ article, onClick, width = 'w-40 sm:w-44 md:w-48' }) {
       className={`group rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-200 relative text-left ${width}`}
       aria-label={`Play: ${article.title}`}
     >
-      <div className="aspect-[9/16] bg-navy-900 relative overflow-hidden">
-        <div className="w-full h-full group-hover:scale-105 transition-transform duration-300">
+      <div className="relative bg-navy-900" style={{ aspectRatio: '9/16' }}>
+        <div className="absolute inset-0 overflow-hidden group-hover:scale-105 transition-transform duration-300">
           <ReelThumbnail article={article} />
         </div>
 

@@ -10,29 +10,28 @@ function getYouTubeId(url) {
   return m ? m[1] : null
 }
 
-function ReelThumb({ reel }) {
-  const ytId = getYouTubeId(reel.videoUrl)
-  if (reel.coverImageUrl) {
-    return <img src={reel.coverImageUrl} alt={reel.title} loading="lazy" className="w-full h-full object-cover" />
-  }
-  if (ytId) {
-    return <img src={`https://img.youtube.com/vi/${ytId}/hqdefault.jpg`} alt={reel.title} loading="lazy" className="w-full h-full object-cover" />
-  }
-  if (reel.videoUrl) {
-    return <video src={reel.videoUrl} preload="metadata" muted playsInline className="w-full h-full object-cover" />
-  }
-  return <div className="w-full h-full bg-gradient-to-b from-navy-700 to-navy-900 flex items-center justify-center"><Play size={28} className="text-white/30" /></div>
-}
-
 function ReelPreviewCard({ reel }) {
+  const ytId = getYouTubeId(reel.videoUrl)
+
   return (
     <a
       href={`/blog/${reel.slug}`}
-      className="group flex-shrink-0 w-36 sm:w-40 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+      className="group flex-shrink-0 w-36 sm:w-40 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow block"
     >
-      <div className="aspect-[9/16] bg-navy-900 relative overflow-hidden">
-        <div className="w-full h-full group-hover:scale-105 transition-transform duration-300">
-          <ReelThumb reel={reel} />
+      <div className="relative bg-navy-900" style={{ aspectRatio: '9/16' }}>
+        {/* thumbnail absolutely fills the box so video/img can't escape */}
+        <div className="absolute inset-0 overflow-hidden group-hover:scale-105 transition-transform duration-300">
+          {reel.coverImageUrl ? (
+            <img src={reel.coverImageUrl} alt={reel.title} loading="lazy" className="w-full h-full object-cover" />
+          ) : ytId ? (
+            <img src={`https://img.youtube.com/vi/${ytId}/hqdefault.jpg`} alt={reel.title} loading="lazy" className="w-full h-full object-cover" />
+          ) : reel.videoUrl ? (
+            <video src={reel.videoUrl} preload="metadata" muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+          ) : (
+            <div className="w-full h-full bg-gradient-to-b from-navy-700 to-navy-900 flex items-center justify-center">
+              <Play size={28} className="text-white/30" />
+            </div>
+          )}
         </div>
         <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors" />
         <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent p-3 pt-10">
