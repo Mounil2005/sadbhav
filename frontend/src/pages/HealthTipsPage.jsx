@@ -117,8 +117,8 @@ export default function HealthTipsPage() {
     fetchHealthUpdates().then(setPosts)
   }, [])
 
-  const articles = posts?.filter((p) => p.contentType !== 'video') ?? []
-  const reels = posts?.filter((p) => p.contentType === 'video') ?? []
+  const articles = posts?.filter((p) => p.contentType !== 'reel') ?? []
+  const reels = posts?.filter((p) => p.contentType === 'reel') ?? []
 
   return (
     <div className="min-h-screen bg-warm-50">

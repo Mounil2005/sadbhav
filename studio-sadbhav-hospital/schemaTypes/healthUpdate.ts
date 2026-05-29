@@ -32,11 +32,13 @@ export const healthUpdate = defineType({
       title: 'Content Type',
       type: 'string',
       group: 'content',
+      description: '⚠️ Reel / Short — content will display in portrait (9:16) mode on the website. All other types display in landscape.',
       options: {
         list: [
-          {title: 'Article', value: 'article'},
-          {title: 'Video', value: 'video'},
-          {title: 'Image', value: 'image'},
+          {title: '📝 Article', value: 'article'},
+          {title: '🖼️ Image Post', value: 'image'},
+          {title: '🎥 Video (in article)', value: 'video'},
+          {title: '📱 Reel / Short (portrait 9:16)', value: 'reel'},
         ],
         layout: 'radio',
       },
@@ -129,7 +131,7 @@ export const healthUpdate = defineType({
       group: 'media',
       description: 'Upload a video directly (MP4 recommended). Best for short clips.',
       options: {accept: 'video/*'},
-      hidden: ({document}) => document?.contentType !== 'video',
+      hidden: ({document}) => document?.contentType !== 'video' && document?.contentType !== 'reel',
     }),
     defineField({
       name: 'videoUrl',
@@ -137,7 +139,7 @@ export const healthUpdate = defineType({
       type: 'url',
       group: 'media',
       description: 'YouTube or Instagram link. Use this for long videos instead of uploading.',
-      hidden: ({document}) => document?.contentType !== 'video',
+      hidden: ({document}) => document?.contentType !== 'video' && document?.contentType !== 'reel',
     }),
 
     // ── Publishing ───────────────────────────────────────────────────────────
@@ -195,6 +197,7 @@ export const healthUpdate = defineType({
         article: '📝 Article',
         video: '🎥 Video',
         image: '🖼️ Image',
+        reel: '📱 Reel',
       }
       const date = publishedAt ? new Date(publishedAt).toLocaleDateString('en-IN') : ''
       return {
