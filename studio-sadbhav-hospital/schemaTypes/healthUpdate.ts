@@ -33,6 +33,7 @@ export const healthUpdate = defineType({
       type: 'string',
       group: 'content',
       description: 'Reel / Short: content will display in portrait (9:16) mode on the website. All other types display in landscape.',
+      hidden: ({document}) => document?.contentType === 'reel',
       options: {
         list: [
           {title: 'Article', value: 'article'},

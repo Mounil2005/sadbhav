@@ -4,6 +4,45 @@ import HospitalImage from '../components/ui/HospitalImage'
 import RevealWrapper from '../components/ui/RevealWrapper'
 import { BLOG_ARTICLES, BLOG_CONTENT } from '../data/blog'
 
+function getYouTubeId(url) {
+  if (!url) return null
+  const m = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&?/]+)/)
+  return m ? m[1] : null
+}
+
+function ReelThumb({ reel }) {
+  const ytId = getYouTubeId(reel.videoUrl)
+  if (reel.coverImageUrl) {
+    return <img src={reel.coverImageUrl} alt={reel.title} loading="lazy" className="w-full h-full object-cover" />
+  }
+  if (ytId) {
+    return <img src={`https://img.youtube.com/vi/${ytId}/hqdefault.jpg`} alt={reel.title} loading="lazy" className="w-full h-full object-cover" />
+  }
+  if (reel.videoUrl) {
+    return <video src={reel.videoUrl} preload="metadata" muted playsInline className="w-full h-full object-cover" />
+  }
+  return <div className="w-full h-full bg-gradient-to-b from-navy-700 to-navy-900 flex items-center justify-center"><Play size={28} className="text-white/30" /></div>
+}
+
+function ReelPreviewCard({ reel }) {
+  return (
+    <a
+      href={`/blog/${reel.slug}`}
+      className="group flex-shrink-0 w-36 sm:w-40 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+    >
+      <div className="aspect-[9/16] bg-navy-900 relative overflow-hidden">
+        <div className="w-full h-full group-hover:scale-105 transition-transform duration-300">
+          <ReelThumb reel={reel} />
+        </div>
+        <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors" />
+        <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent p-3 pt-10">
+          <p className="text-white text-[11px] font-display font-semibold leading-snug line-clamp-2">{reel.title}</p>
+        </div>
+      </div>
+    </a>
+  )
+}
+
 const TYPE_ICON = {
   video: <Play size={11} className="inline-block mr-0.5" aria-hidden="true" />,
   reel: <Play size={11} className="inline-block mr-0.5" aria-hidden="true" />,
@@ -141,47 +180,79 @@ function SecondaryCard({ article }) {
 
 export default function BlogSection({
   articles = BLOG_ARTICLES,
+  reels = [],
   content = BLOG_CONTENT,
 }) {
   const featured = articles.find((a) => a.featured) ?? articles[0]
-  if (!featured) return null
   const secondary = articles.filter((a) => a.id !== featured?.id).slice(0, 3)
+
+  if (!featured && reels.length === 0) return null
 
   return (
     <section id="blog" className="py-20 sm:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
 
-        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-6 mb-10 sm:mb-14">
-          <RevealWrapper>
-            <SectionHeader
-              label={content.sectionLabel}
-              heading={content.heading}
-            />
-          </RevealWrapper>
-          <RevealWrapper delay={80}>
-            <a
-              href={content.viewAllHref}
-              className="inline-flex items-center gap-2 text-sm font-sans font-semibold text-medical-500 hover:gap-3 transition-all duration-200 flex-shrink-0"
-            >
-              {content.viewAllLabel}
-              <ArrowRight size={15} strokeWidth={2} aria-hidden="true" />
-            </a>
-          </RevealWrapper>
-        </div>
-
-        <div className="grid lg:grid-cols-2 gap-5 sm:gap-6">
-          <RevealWrapper>
-            <FeaturedCard article={featured} />
-          </RevealWrapper>
-
-          <div className="flex flex-col gap-4 sm:gap-5">
-            {secondary.map((article, i) => (
-              <RevealWrapper key={article.id} delay={(i + 1) * 70}>
-                <SecondaryCard article={article} />
+        {featured && (
+          <>
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-6 mb-10 sm:mb-14">
+              <RevealWrapper>
+                <SectionHeader
+                  label={content.sectionLabel}
+                  heading={content.heading}
+                />
               </RevealWrapper>
-            ))}
-          </div>
-        </div>
+              <RevealWrapper delay={80}>
+                <a
+                  href={content.viewAllHref}
+                  className="inline-flex items-center gap-2 text-sm font-sans font-semibold text-medical-500 hover:gap-3 transition-all duration-200 flex-shrink-0"
+                >
+                  {content.viewAllLabel}
+                  <ArrowRight size={15} strokeWidth={2} aria-hidden="true" />
+                </a>
+              </RevealWrapper>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-5 sm:gap-6">
+              <RevealWrapper>
+                <FeaturedCard article={featured} />
+              </RevealWrapper>
+
+              <div className="flex flex-col gap-4 sm:gap-5">
+                {secondary.map((article, i) => (
+                  <RevealWrapper key={article.id} delay={(i + 1) * 70}>
+                    <SecondaryCard article={article} />
+                  </RevealWrapper>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
+
+        {reels.length > 0 && (
+          <RevealWrapper>
+            <div className={featured ? 'mt-14 sm:mt-16' : ''}>
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="font-display font-bold text-xl sm:text-2xl text-navy-800">Videos for General Health</h2>
+                <a
+                  href="/health-tips"
+                  className="inline-flex items-center gap-1.5 text-sm font-sans font-semibold text-medical-500 hover:gap-2.5 transition-all flex-shrink-0"
+                >
+                  View all <ArrowRight size={14} strokeWidth={2} />
+                </a>
+              </div>
+              <div
+                className="flex gap-3 overflow-x-auto pb-3 snap-x snap-mandatory -mx-4 sm:-mx-6 px-4 sm:px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              >
+                {reels.map((reel) => (
+                  <div key={reel.id} className="snap-start">
+                    <ReelPreviewCard reel={reel} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </RevealWrapper>
+        )}
+
       </div>
     </section>
   )

@@ -31,7 +31,11 @@ export default function HomePage() {
       <ServicesSection />
       <DoctorSection />
       <FacilitiesSection />
-      <BlogSection articles={healthUpdates ? healthUpdates.filter((p) => p.contentType !== 'reel') : undefined} content={BLOG_CONTENT} />
+      <BlogSection
+        articles={healthUpdates ? healthUpdates.filter((p) => p.contentType !== 'reel') : undefined}
+        reels={healthUpdates ? healthUpdates.filter((p) => p.contentType === 'reel') : []}
+        content={BLOG_CONTENT}
+      />
       <TestimonialsSection />
       <ContactSection />
     </>
