@@ -11,13 +11,21 @@ function getYouTubeId(url) {
 
 const bodyComponents = {
   block: {
-    normal: ({ children }) => <p className="text-white/70 text-sm leading-relaxed mb-3">{children}</p>,
+    normal: ({ children }) => <p className="text-white/80 text-sm leading-relaxed mb-3">{children}</p>,
     h2: ({ children }) => <h2 className="font-display font-semibold text-base text-white mt-5 mb-2">{children}</h2>,
-    h3: ({ children }) => <h3 className="font-display font-semibold text-sm text-white/90 mt-4 mb-1.5">{children}</h3>,
-    blockquote: ({ children }) => <blockquote className="border-l-2 border-white/30 pl-3 my-3 italic text-white/50 text-xs">{children}</blockquote>,
+    h3: ({ children }) => <h3 className="font-display font-semibold text-sm text-white mt-4 mb-1.5">{children}</h3>,
+    blockquote: ({ children }) => <blockquote className="border-l-2 border-white/30 pl-3 my-3 italic text-white/60 text-xs">{children}</blockquote>,
+  },
+  list: {
+    bullet: ({ children }) => <ul className="list-disc list-outside pl-4 mb-3 space-y-1">{children}</ul>,
+    number: ({ children }) => <ol className="list-decimal list-outside pl-4 mb-3 space-y-1">{children}</ol>,
+  },
+  listItem: {
+    bullet: ({ children }) => <li className="text-white/80 text-sm leading-relaxed">{children}</li>,
+    number: ({ children }) => <li className="text-white/80 text-sm leading-relaxed">{children}</li>,
   },
   marks: {
-    strong: ({ children }) => <strong className="font-semibold text-white/90">{children}</strong>,
+    strong: ({ children }) => <strong className="font-semibold text-white">{children}</strong>,
     em: ({ children }) => <em className="italic">{children}</em>,
   },
 }
@@ -164,7 +172,7 @@ export default function ReelModal({ reels, index, onClose, onPrev, onNext }) {
           className="absolute inset-x-0 bottom-0 transition-transform duration-300 ease-in-out"
           style={{ transform: panelOpen ? 'translateY(0)' : 'translateY(100%)' }}
         >
-          <div className="bg-black/95 rounded-t-2xl max-h-[55vh] flex flex-col">
+          <div className="bg-black/95 rounded-t-2xl max-h-[48vh] flex flex-col">
             {/* Handle + collapse button */}
             <button
               onClick={() => setPanelOpen(false)}
