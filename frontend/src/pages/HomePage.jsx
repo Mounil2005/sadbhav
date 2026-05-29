@@ -14,7 +14,7 @@ import { fetchHealthUpdates, BLOG_CONTENT } from '../lib/queries'
 export default function HomePage() {
   useSEO({
     title: 'Advanced Pulmonary & Critical Care, Jamnagar',
-    description: 'Sadbhav Hospital offers expert pulmonary, respiratory and critical care in Jamnagar. Trusted care by Dr. Vivek Nanda — book your appointment today.',
+    description: 'Sadbhav Hospital offers expert pulmonary, respiratory and critical care in Jamnagar. Trusted care by Dr. Vivek Nanda. Book your appointment today.',
   })
 
   const [healthUpdates, setHealthUpdates] = useState(null)

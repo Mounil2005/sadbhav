@@ -201,7 +201,7 @@ export default function BlogPostPage() {
               <p className="font-display font-semibold text-lg text-navy-800 mb-1">
                 Have questions about your respiratory health?
               </p>
-              <p className="text-sm text-warm-500">Consult Dr. Vivek Nanda — {SITE.name}, Jamnagar</p>
+              <p className="text-sm text-warm-500">Consult Dr. Vivek Nanda at {SITE.name}, Jamnagar</p>
             </div>
             <button
               data-cal-link="mounil-kankhara-tsigot/30min"

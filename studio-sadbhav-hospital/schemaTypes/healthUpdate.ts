@@ -32,13 +32,13 @@ export const healthUpdate = defineType({
       title: 'Content Type',
       type: 'string',
       group: 'content',
-      description: '⚠️ Reel / Short — content will display in portrait (9:16) mode on the website. All other types display in landscape.',
+      description: 'Reel / Short: content will display in portrait (9:16) mode on the website. All other types display in landscape.',
       options: {
         list: [
-          {title: '📝 Article', value: 'article'},
-          {title: '🖼️ Image Post', value: 'image'},
-          {title: '🎥 Video (in article)', value: 'video'},
-          {title: '📱 Reel / Short (portrait 9:16)', value: 'reel'},
+          {title: 'Article', value: 'article'},
+          {title: 'Image Post', value: 'image'},
+          {title: 'Video (in article)', value: 'video'},
+          {title: 'Reel / Short (portrait 9:16)', value: 'reel'},
         ],
         layout: 'radio',
       },
@@ -194,10 +194,10 @@ export const healthUpdate = defineType({
     },
     prepare({title, contentType, media, publishedAt}) {
       const typeLabel: Record<string, string> = {
-        article: '📝 Article',
-        video: '🎥 Video',
-        image: '🖼️ Image',
-        reel: '📱 Reel',
+        article: 'Article',
+        video: 'Video',
+        image: 'Image',
+        reel: 'Reel',
       }
       const date = publishedAt ? new Date(publishedAt).toLocaleDateString('en-IN') : ''
       return {

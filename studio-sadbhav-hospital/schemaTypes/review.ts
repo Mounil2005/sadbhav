@@ -13,7 +13,7 @@ export const review = defineType({
     }),
     defineField({
       name: 'rating',
-      title: 'Rating (1–5)',
+      title: 'Rating (1-5)',
       type: 'number',
       validation: (r) => r.required().min(1).max(5).integer(),
     }),
