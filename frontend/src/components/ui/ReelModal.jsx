@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback, useState } from 'react'
+import { useEffect, useRef, useCallback } from 'react'
 import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 
 function getYouTubeId(url) {
@@ -55,9 +55,6 @@ function VideoPlayer({ reel }) {
 
 export default function ReelModal({ reels, index, onClose, onPrev, onNext }) {
   const reel = reels[index]
-  const [expanded, setExpanded] = useState(false)
-
-  useEffect(() => setExpanded(false), [index])
 
   const handleKey = useCallback((e) => {
     if (e.key === 'Escape') onClose()
@@ -75,8 +72,6 @@ export default function ReelModal({ reels, index, onClose, onPrev, onNext }) {
   }, [handleKey])
 
   if (!reel) return null
-
-  const isLong = reel.excerpt && reel.excerpt.length > 90
 
   return (
     <div
@@ -139,29 +134,13 @@ export default function ReelModal({ reels, index, onClose, onPrev, onNext }) {
           {/* Description + see more */}
           {reel.excerpt && (
             <div className="text-white/70 text-xs leading-relaxed">
-              {expanded ? (
-                <div className="max-h-32 overflow-y-auto pr-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                  <span>{reel.excerpt}</span>
-                  <button
-                    onClick={() => setExpanded(false)}
-                    className="text-white/50 font-medium ml-1.5"
-                  >
-                    show less
-                  </button>
-                </div>
-              ) : (
-                <>
-                  <span className={isLong ? 'line-clamp-2' : ''}>{reel.excerpt}</span>
-                  {isLong && (
-                    <button
-                      onClick={() => setExpanded(true)}
-                      className="text-white font-semibold ml-1"
-                    >
-                      ...see more
-                    </button>
-                  )}
-                </>
-              )}
+              <span className="line-clamp-2">{reel.excerpt}</span>
+              <a
+                href={`/blog/${reel.slug}`}
+                className="text-white font-semibold ml-1 hover:underline"
+              >
+                ...see more
+              </a>
             </div>
           )}
 
