@@ -46,7 +46,7 @@ export default defineConfig({
                           ]),
                       ),
                     S.listItem()
-                      .title('📱 Reels')
+                      .title('Reels')
                       .child(
                         S.documentTypeList('healthUpdate')
                           .title('Reels')
