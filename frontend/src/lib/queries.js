@@ -47,6 +47,7 @@ function mapToBlogArticle(update, index) {
     article: 'Article',
     video: 'Video',
     image: 'Image',
+    reel: 'Reel',
   }
 
   const date = update.publishedAt ? new Date(update.publishedAt) : new Date()
