@@ -236,7 +236,7 @@ export default function BlogSection({
           <RevealWrapper>
             <div className={featured ? 'mt-14 sm:mt-16' : ''}>
               <div className="flex items-center justify-between mb-6">
-                <h2 className="font-display font-bold text-xl sm:text-2xl text-navy-800">Videos for General Health</h2>
+                <h2 className="font-display font-semibold text-3xl md:text-4xl text-navy-700">Videos for General Health</h2>
                 <a
                   href="/health-tips"
                   className="inline-flex items-center gap-1.5 text-sm font-sans font-semibold text-medical-500 hover:gap-2.5 transition-all flex-shrink-0"
