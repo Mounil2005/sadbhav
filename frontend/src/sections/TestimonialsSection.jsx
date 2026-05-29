@@ -304,11 +304,11 @@ export default function TestimonialsSection({
           </div>
         </RevealWrapper>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-          {displayed.map((item, i) => (
-            <RevealWrapper key={item.id} delay={i * 70}>
+        <div className="flex gap-4 overflow-x-auto pb-3 snap-x snap-mandatory -mx-4 sm:-mx-6 px-4 sm:px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {displayed.map((item) => (
+            <div key={item.id} className="snap-start flex-shrink-0 w-72 sm:w-80">
               <ReviewItem {...item} />
-            </RevealWrapper>
+            </div>
           ))}
         </div>
 
