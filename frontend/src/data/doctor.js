@@ -1,3 +1,39 @@
+export const DOCTOR_JOURNEY = [
+  {
+    id: 'education',
+    year: '2005 – 2011',
+    stage: 'Medical Education',
+    title: 'Foundation in Medicine',
+    body: 'Completed MBBS with a strong grounding in clinical sciences, human physiology, and patient care. Hospital rotations across medicine, surgery, and emergency shaped an early commitment to rigorous, evidence-based practice.',
+    accent: '#1e3a6b',
+  },
+  {
+    id: 'specialisation',
+    year: '2011 – 2014',
+    stage: 'Post-Graduate Specialisation',
+    title: 'MD in Pulmonology',
+    body: 'Pursued advanced post-graduate training in respiratory medicine — pulmonary physiology, advanced diagnostics, and the long-term management of conditions including asthma, COPD, and interstitial lung disease.',
+    accent: '#1a4a5a',
+  },
+  {
+    id: 'critical-care',
+    year: '2014 – 2019',
+    stage: 'Fellowship & Critical Care',
+    title: 'ICU Training & Respiratory Interventions',
+    body: 'Completed fellowship training at tertiary care hospitals, gaining intensive expertise in ventilator management, bronchoscopy, and critical care protocols. Managed complex respiratory emergencies alongside senior specialists.',
+    accent: '#1a2a52',
+  },
+  {
+    id: 'sadbhav',
+    year: '2019 – Present',
+    stage: 'Founding Sadbhav Hospital',
+    title: 'Bringing Specialist Care to Jamnagar',
+    body: 'Founded Sadbhav Hospital with a singular mission — to make specialist pulmonary and critical care accessible to patients in Jamnagar. Built a Level II ICU, in-house respiratory lab, and a practice guided by compassion and clinical precision.',
+    accent: '#1e5fa8',
+    imageUrl: '/vivek sir final.jpg',
+  },
+]
+
 export const DOCTOR = {
   name: 'Dr. Vivek',
   initial: 'V',
