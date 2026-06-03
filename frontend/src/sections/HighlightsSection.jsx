@@ -5,7 +5,6 @@ import { HIGHLIGHTS } from '../data/highlights'
 export default function HighlightsSection({ highlights = HIGHLIGHTS }) {
   return (
     <section className="relative bg-navy-800 py-16 sm:py-20 overflow-hidden">
-      {/* Dot pattern */}
       <div
         className="absolute inset-0 opacity-10"
         style={{
@@ -29,25 +28,21 @@ export default function HighlightsSection({ highlights = HIGHLIGHTS }) {
           </div>
         </RevealWrapper>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/10 rounded-2xl sm:rounded-3xl overflow-hidden">
           {highlights.map(({ id, icon, label, description }, i) => {
             const Icon = getIcon(icon)
             return (
               <RevealWrapper key={id} delay={i * 70}>
-                <div className="group h-full bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 sm:p-7 hover:bg-white/10 transition-all duration-300 hover:-translate-y-1">
-                  <div
-                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center mb-4 sm:mb-5"
-                    style={{ background: 'rgba(255,255,255,0.08)' }}
-                    aria-hidden="true"
-                  >
-                    {Icon && <Icon size={20} strokeWidth={1.8} className="text-white" />}
+                <div className="group bg-navy-800 hover:bg-white/[0.04] transition-colors duration-300 px-6 sm:px-8 py-8 sm:py-10 h-full">
+                  <div className="text-[11px] font-sans font-semibold text-white/20 tracking-widest mb-5">
+                    0{i + 1}
+                  </div>
+                  <div className="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center mb-4" aria-hidden="true">
+                    {Icon && <Icon size={18} strokeWidth={1.8} className="text-medical-300" />}
                   </div>
                   <h3 className="font-display font-semibold text-base sm:text-lg text-white mb-2">{label}</h3>
-                  <p className="text-xs sm:text-sm text-white/55 font-body leading-relaxed">{description}</p>
-                  <div
-                    className="mt-4 sm:mt-5 w-8 h-0.5 bg-white/20 group-hover:w-14 transition-all duration-300 rounded-full"
-                    aria-hidden="true"
-                  />
+                  <p className="text-xs sm:text-sm text-white/50 font-body leading-relaxed">{description}</p>
+                  <div className="mt-5 w-6 h-px bg-medical-400/40 group-hover:w-12 transition-all duration-300" />
                 </div>
               </RevealWrapper>
             )
