@@ -27,6 +27,12 @@ export default function HeroSection() {
           }}
         />
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-medical-500 via-medical-400 to-crimson-500" />
+        <div
+          className="absolute left-0 top-1/4 w-[700px] h-[700px] pointer-events-none"
+          style={{
+            background: 'radial-gradient(ellipse at 15% 50%, rgba(30, 95, 168, 0.07) 0%, transparent 65%)',
+          }}
+        />
         <div className="absolute bottom-16 left-0 w-16 sm:w-24 h-0.5 bg-medical-200" />
         <div className="absolute bottom-16 left-20 sm:left-28 w-6 sm:w-8 h-0.5 bg-crimson-300" />
       </div>
