@@ -67,9 +67,9 @@ export const FOOTER_QUICK_LINKS = [
 ]
 
 export const FOOTER_LEGAL_LINKS = [
-  { label: 'Privacy Policy', href: '#' },
-  { label: 'Terms of Use', href: '#' },
-  { label: 'Disclaimer', href: '#' },
+  { label: 'Privacy Policy', href: '/privacy-policy' },
+  { label: 'Terms of Use', href: '/terms-of-use' },
+  { label: 'Medical Disclaimer', href: '/medical-disclaimer' },
 ]
 
 export const SOCIAL_PROOF_STATS = [
