@@ -6,6 +6,9 @@ import HomePage from './pages/HomePage'
 import BlogPostPage from './pages/BlogPostPage'
 import HealthTipsPage from './pages/HealthTipsPage'
 import ReviewPage from './pages/ReviewPage'
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage'
+import TermsOfUsePage from './pages/TermsOfUsePage'
+import MedicalDisclaimerPage from './pages/MedicalDisclaimerPage'
 
 export default function App() {
   useEffect(() => {
@@ -30,6 +33,9 @@ export default function App() {
         <Route path="/health-tips" element={<RootLayout><HealthTipsPage /></RootLayout>} />
         <Route path="/review" element={<ReviewPage />} />
         <Route path="/blog/:slug" element={<RootLayout><BlogPostPage /></RootLayout>} />
+        <Route path="/privacy-policy" element={<RootLayout><PrivacyPolicyPage /></RootLayout>} />
+        <Route path="/terms-of-use" element={<RootLayout><TermsOfUsePage /></RootLayout>} />
+        <Route path="/medical-disclaimer" element={<RootLayout><MedicalDisclaimerPage /></RootLayout>} />
       </Routes>
     </BrowserRouter>
   )

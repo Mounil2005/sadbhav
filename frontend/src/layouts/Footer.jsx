@@ -113,7 +113,7 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-white/8">
         <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-sans text-white/30">
-          <span>&copy; {SITE.year} {SITE.name}. All rights reserved.</span>
+          <span>&copy; {SITE.year} {SITE.name}. All Rights Reserved.</span>
           <div className="flex gap-5">
             {FOOTER_LEGAL_LINKS.map(({ label, href }) => (
               <a key={label} href={href} className="hover:text-white/60 transition-colors">
