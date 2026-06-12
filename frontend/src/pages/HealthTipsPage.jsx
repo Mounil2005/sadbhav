@@ -87,10 +87,11 @@ function ReelThumbnail({ article }) {
   if (article.videoUrl) {
     return (
       <video
-        src={article.videoUrl}
+        src={`${article.videoUrl}#t=0.001`}
         preload="metadata"
         muted
         playsInline
+        onLoadedMetadata={(e) => { e.currentTarget.currentTime = 0.001 }}
         style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
       />
     )

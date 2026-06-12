@@ -52,3 +52,6 @@ yarn-error.log*
 # Misc
 *.zip
 *.tar.gz
+
+.vercel
+.env*

@@ -28,7 +28,14 @@ function ReelPreviewCard({ reel, onClick }) {
           ) : ytId ? (
             <img src={`https://img.youtube.com/vi/${ytId}/hqdefault.jpg`} alt={reel.title} loading="lazy" className="w-full h-full object-cover" />
           ) : reel.videoUrl ? (
-            <video src={reel.videoUrl} preload="metadata" muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            <video
+              src={`${reel.videoUrl}#t=0.001`}
+              preload="metadata"
+              muted
+              playsInline
+              onLoadedMetadata={(e) => { e.currentTarget.currentTime = 0.001 }}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            />
           ) : (
             <div className="w-full h-full bg-gradient-to-b from-navy-700 to-navy-900 flex items-center justify-center">
               <Play size={28} className="text-white/30" />
