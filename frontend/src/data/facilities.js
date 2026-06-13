@@ -16,8 +16,8 @@ export const FACILITIES = [
     detail:
       'Private air-conditioned rooms for patients who prefer personal comfort and family privacy.',
     spec: 'Private & semi-private',
-    imageUrl: null,
-    bgGradient: 'linear-gradient(160deg, #1a4558 0%, #0d2a3a 100%)',
+    imageUrl: '/AC Private room.png',
+    bgGradient: null,
   },
   {
     id: 'waiting-area',
@@ -36,8 +36,8 @@ export const FACILITIES = [
     detail:
       'Well-ventilated, comfortable general ward with attentive nursing staff and regular physician rounds.',
     spec: 'Mixed-gender wards',
-    imageUrl: null,
-    bgGradient: 'linear-gradient(160deg, #1a3564 0%, #0f2240 100%)',
+    imageUrl: '/General Ward.png',
+    bgGradient: null,
   },
   {
     id: 'consultation-cabin',
@@ -46,8 +46,8 @@ export const FACILITIES = [
     detail:
       'Dedicated, private consultation cabin for in-depth patient discussions, reviews, and follow-ups.',
     spec: 'Fully private',
-    imageUrl: null,
-    bgGradient: 'linear-gradient(160deg, #1a2a52 0%, #0d1a38 100%)',
+    imageUrl: '/Consultation Cabin.png',
+    bgGradient: null,
   },
   {
     id: 'respiratory-lab',

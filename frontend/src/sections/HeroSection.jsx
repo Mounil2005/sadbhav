@@ -1,10 +1,24 @@
+import { useState, useEffect } from 'react'
 import { Phone, Calendar } from 'lucide-react'
 import { getIcon } from '../utils/icons'
-import HospitalImage from '../components/ui/HospitalImage'
 import RevealWrapper from '../components/ui/RevealWrapper'
 import { SITE, TRUST_BADGES } from '../data/site'
 
+const HERO_SLIDES = [
+  { src: '/Reception.png', alt: 'Sadbhav Hospital reception' },
+  { src: '/AC Private room.png', alt: 'AC private rooms' },
+  { src: '/Consultation Cabin.png', alt: 'Consultation cabin' },
+  { src: '/General Ward.png', alt: 'General ward' },
+]
+
 export default function HeroSection() {
+  const [slide, setSlide] = useState(0)
+
+  useEffect(() => {
+    const t = setInterval(() => setSlide(s => (s + 1) % HERO_SLIDES.length), 4000)
+    return () => clearInterval(t)
+  }, [])
+
   return (
     <section
       id="home"
@@ -115,19 +129,27 @@ export default function HeroSection() {
           {/* ── Right — Visual composition ── */}
           <RevealWrapper delay={150} direction="left" className="relative hidden lg:block">
             <div className="relative z-10">
-              {/* Hero visual panel using image system */}
-              <HospitalImage
-                src="/Reception.png"
-                alt="Sadbhav Hospital reception"
-                aspect="hero"
-                gradient="navy"
-                overlay
-                overlayOpacity={0.35}
-                className="w-full rounded-3xl shadow-premium"
+              {/* Hero visual panel — auto-sliding */}
+              <div
+                className="relative w-full rounded-3xl shadow-premium overflow-hidden"
+                style={{ aspectRatio: '4/5' }}
               >
+                {/* Slides */}
+                {HERO_SLIDES.map((s, i) => (
+                  <img
+                    key={s.src}
+                    src={s.src}
+                    alt={s.alt}
+                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${i === slide ? 'opacity-100' : 'opacity-0'}`}
+                  />
+                ))}
+
+                {/* Dark overlay */}
+                <div className="absolute inset-0 bg-navy-900" style={{ opacity: 0.35 }} aria-hidden="true" />
+
                 {/* Dot pattern */}
                 <div
-                  className="absolute inset-0 opacity-[0.06]"
+                  className="absolute inset-0 opacity-[0.06] z-10"
                   style={{
                     backgroundImage: 'radial-gradient(circle, white 1.5px, transparent 1.5px)',
                     backgroundSize: '22px 22px',
@@ -135,14 +157,15 @@ export default function HeroSection() {
                   aria-hidden="true"
                 />
                 {/* Medical cross watermark */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-[0.04]" aria-hidden="true">
+                <div className="absolute inset-0 flex items-center justify-center opacity-[0.04] z-10" aria-hidden="true">
                   <svg viewBox="0 0 200 200" className="w-3/4">
                     <rect x="80" y="20" width="40" height="160" rx="8" fill="white" />
                     <rect x="20" y="80" width="160" height="40" rx="8" fill="white" />
                   </svg>
                 </div>
+
                 {/* Caption */}
-                <div className="absolute inset-0 p-8 md:p-10 pb-20 md:pb-24 flex flex-col justify-end text-white/90">
+                <div className="absolute inset-0 p-8 md:p-10 pb-20 md:pb-24 flex flex-col justify-end text-white/90 z-20">
                   <div className="mb-6">
                     <div className="w-16 h-px bg-white/30 mb-4" aria-hidden="true" />
                     <p className="font-display text-xl md:text-2xl font-medium leading-snug">
@@ -153,10 +176,23 @@ export default function HeroSection() {
                     </p>
                   </div>
                 </div>
+
+                {/* Slide indicators */}
+                <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex gap-1.5 z-30">
+                  {HERO_SLIDES.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setSlide(i)}
+                      aria-label={`Slide ${i + 1}`}
+                      className={`h-1.5 rounded-full transition-all duration-300 ${i === slide ? 'w-5 bg-white' : 'w-1.5 bg-white/40'}`}
+                    />
+                  ))}
+                </div>
+
                 {/* Decorative circles */}
-                <div className="absolute top-6 right-6 w-20 h-20 rounded-full bg-white/5 border border-white/10" aria-hidden="true" />
-                <div className="absolute top-14 right-14 w-9 h-9 rounded-full bg-white/5" aria-hidden="true" />
-              </HospitalImage>
+                <div className="absolute top-6 right-6 w-20 h-20 rounded-full bg-white/5 border border-white/10 z-20" aria-hidden="true" />
+                <div className="absolute top-14 right-14 w-9 h-9 rounded-full bg-white/5 z-20" aria-hidden="true" />
+              </div>
 
               {/* Floating stat — top left */}
               <div
