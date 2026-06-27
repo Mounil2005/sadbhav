@@ -23,35 +23,24 @@ export const SITE = {
 
 export const VISITING_HOURS = [
   { day: 'Monday - Saturday', time: '10:00 AM - 2:30 PM\n6:00 PM - 9:30 PM', timeShort: '10 AM - 9:30 PM', isEmergency: false },
-  {
-    day: 'Sunday',
-    timeShort: 'Outreach',
-    isClosed: false,
-    isEmergency: false,
-    isOutreach: true,
-    outreach: [
-      { week: '2nd', places: [{ name: 'Khambhalia', time: '11:00 AM - 1:30 PM' }] },
-      { week: '3rd', places: [{ name: 'Jamjodhpur', time: '9:00 - 11:00 AM' }, { name: 'Bhanvad', time: '11:30 AM - 1:30 PM' }] },
-    ],
-  },
   { day: 'Emergency', time: '24 Hours / 7 Days', timeShort: '24 / 7', isEmergency: true },
 ]
 
-export const OUTREACH_SCHEDULE = [
-  {
-    week: '2nd Sunday',
-    visits: [
-      { location: 'Khambhalia', time: '11:00 AM - 1:30 PM' },
-    ],
-  },
-  {
-    week: '3rd Sunday',
-    visits: [
-      { location: 'Jamjodhpur', time: '9:00 AM - 11:00 AM' },
-      { location: 'Bhanvad', time: '11:30 AM - 1:30 PM' },
-    ],
-  },
-]
+// export const OUTREACH_SCHEDULE = [
+//   {
+//     week: '2nd Sunday',
+//     visits: [
+//       { location: 'Khambhalia', time: '11:00 AM - 1:30 PM' },
+//     ],
+//   },
+//   {
+//     week: '3rd Sunday',
+//     visits: [
+//       { location: 'Jamjodhpur', time: '9:00 AM - 11:00 AM' },
+//       { location: 'Bhanvad', time: '11:30 AM - 1:30 PM' },
+//     ],
+//   },
+// ]
 
 export const SOCIAL_LINKS = [
   { platform: 'Instagram', icon: 'Instagram', href: 'https://www.instagram.com/sadbhavhospital_dr.vivek/' },
@@ -76,7 +65,7 @@ export const SOCIAL_PROOF_STATS = [
   { value: '5000+', label: 'Patients Treated' },
   { value: '4.9/5', label: 'Average Rating' },
   { value: '98%', label: 'Would Recommend' },
-  { value: '5+', label: 'Years of Trust' },
+  { value: '10', label: 'Years of Trust' },
 ]
 
 export const TRUST_BADGES = [

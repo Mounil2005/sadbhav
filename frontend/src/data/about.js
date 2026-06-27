@@ -8,7 +8,7 @@ export const ABOUT_PILLARS = [
 ]
 
 export const ABOUT_MILESTONES = [
-  { value: '5+', label: 'Years of Practice' },
+  { value: '10', label: 'Years of Practice' },
   { value: '5000+', label: 'Patients Treated' },
   { value: '24/7', label: 'Emergency Care' },
   { value: '98%', label: 'Patient Satisfaction' },

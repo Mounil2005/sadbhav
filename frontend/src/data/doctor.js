@@ -40,8 +40,8 @@ export const DOCTOR = {
   role: 'Pulmonologist & Critical Care Specialist',
   qualifications: 'MBBS, MD (Pulmonology)',
   hospital: 'Sadbhav Hospital, Ahmedabad',
-  status: 'Accepting Patients',
-  experienceLabel: '5+ Years Experience',
+  // status: 'Accepting Patients',
+  experienceLabel: '10 Years Experience',
   bio: [
     'Dr. Vivek is the principal consultant and founder of Sadbhav Hospital, bringing over fifteen years of dedicated expertise in pulmonary medicine and critical care. His patient-first philosophy, combined with deep clinical knowledge, has made him one of Ahmedabad\'s most trusted respiratory specialists.',
     'Trained in advanced bronchoscopy and ventilator management, Dr. Vivek has successfully managed thousands of complex respiratory cases. He is committed to keeping his clinical practice aligned with the latest evidence-based guidelines in pulmonology.',
@@ -53,7 +53,7 @@ export const DOCTOR = {
   credentials: [
     { icon: 'BookOpen', label: 'MBBS', sub: 'Bachelor of Medicine & Surgery' },
     { icon: 'Award', label: 'MD (Pulmonology)', sub: 'Specialist in Respiratory Medicine' },
-    { icon: 'Stethoscope', label: '5+ Years', sub: 'Clinical Practice' },
+    { icon: 'Stethoscope', label: '10 Years', sub: 'Clinical Practice' },
     { icon: 'Users', label: '5000+', sub: 'Patients Treated' },
   ],
   specialisations: [
