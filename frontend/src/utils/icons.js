@@ -1,6 +1,6 @@
 import {
   Activity, ArrowRight, Award, BedDouble, BookOpen, Calendar,
-  CheckCircle, ChevronDown, Clock, Coffee, Facebook, Heart,
+  CheckCircle, ChevronDown, Clock, Coffee, Facebook, FlaskConical, Heart,
   Instagram, Mail, MapPin, Menu, MessageCircle, Phone, Quote,
   Send, Shield, ShieldPlus, Stethoscope, Thermometer, Users,
   Wind, X, Youtube, Zap,
@@ -8,7 +8,7 @@ import {
 
 const ICON_REGISTRY = {
   Activity, ArrowRight, Award, BedDouble, BookOpen, Calendar,
-  CheckCircle, ChevronDown, Clock, Coffee, Facebook, Heart,
+  CheckCircle, ChevronDown, Clock, Coffee, Facebook, FlaskConical, Heart,
   Instagram, Mail, MapPin, Menu, MessageCircle, Phone, Quote,
   Send, Shield, ShieldPlus, Stethoscope, Thermometer, Users,
   Wind, X, Youtube, Zap,
