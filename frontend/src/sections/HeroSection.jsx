@@ -199,7 +199,7 @@ export default function HeroSection() {
                 className="absolute -left-10 xl:-left-12 top-12 bg-white rounded-2xl shadow-premium p-4 min-w-[140px] border border-warm-100"
                 aria-label="5 or more years of clinical excellence"
               >
-                <div className="text-3xl font-display font-bold text-medical-500">5+</div>
+                <div className="text-3xl font-display font-bold text-medical-500">10</div>
                 <div className="text-xs text-warm-500 font-sans mt-1 leading-tight">Years of<br />Clinical Excellence</div>
                 <div className="mt-2 flex gap-1" aria-hidden="true">
                   {Array.from({ length: 5 }, (_, i) => (

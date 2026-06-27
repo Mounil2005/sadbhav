@@ -131,14 +131,12 @@ export default function ContactSection() {
             <div className="rounded-2xl sm:rounded-3xl border border-warm-200 overflow-hidden shadow-card">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14748.125100023579!2d70.060291!3d22.465459!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39576b2cb5285cd1%3A0x8977bbd3f6c2a63!2sSADBHAV%20HOSPITAL%20CHEST%20PHYSICIAN%20IN%20JAMNGAR%20DR%20VIVEK%20NANDA!5e0!3m2!1sen!2sin!4v1779126770951!5m2!1sen!2sin"
-                width="800"
-                height="600"
                 style={{ border: 0 }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 title={`Map — ${SITE.name}, Jamnagar`}
-                className="w-full"
+                className="w-full h-[320px] sm:h-[420px] lg:h-full lg:min-h-[520px] block"
               />
             </div>
           </RevealWrapper>

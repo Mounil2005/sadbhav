@@ -365,7 +365,7 @@ export default function TestimonialsSection({
 
         <RevealWrapper delay={80}>
           <div
-            className="mt-8 sm:mt-12 grid grid-cols-2 md:grid-cols-5 bg-warm-100 rounded-2xl sm:rounded-3xl border border-warm-100 shadow-card overflow-hidden gap-px"
+            className="mt-8 sm:mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 bg-warm-100 rounded-2xl sm:rounded-3xl border border-warm-100 shadow-card overflow-hidden gap-px"
             role="list"
             aria-label="Hospital statistics"
           >
