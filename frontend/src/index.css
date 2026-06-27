@@ -13,12 +13,23 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    /* Prevent iOS from auto-inflating font sizes in landscape */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
 
   body {
     @apply font-body text-warm-800 bg-white;
     line-height: 1.65;
     font-feature-settings: 'kern' 1, 'liga' 1;
+    /* Guard against accidental horizontal scroll on small screens */
+    overflow-x: hidden;
+  }
+
+  /* Faster, cleaner taps on touch devices */
+  button, [role="button"], a, input, label, select, textarea {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
   }
 
   h1, h2, h3, h4, h5, h6 {
