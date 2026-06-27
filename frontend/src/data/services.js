@@ -50,13 +50,13 @@ export const SERVICES = [
     featured: false,
   },
   {
-    id: 'emergency-medical',
-    slug: 'emergency-medical-support',
-    icon: 'Zap',
-    title: 'Emergency Medical',
+    id: 'pulmonology-lab',
+    slug: 'pulmonology-lab',
+    icon: 'FlaskConical',
+    title: 'Pulmonology Lab',
     description:
-      'Rapid assessment and emergency intervention for acute respiratory failure, breathlessness, and critical medical events.',
-    tag: 'Emergency',
+      'Advanced in-house procedures including bronchoscopy, thoracoscopy, pulmonary function testing (PFT), intercostal drain (ICD), and lung biopsy.',
+    tag: 'Diagnostics',
     featured: false,
   },
 ]
