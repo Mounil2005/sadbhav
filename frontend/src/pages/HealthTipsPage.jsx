@@ -161,8 +161,8 @@ export default function HealthTipsPage() {
     fetchHealthUpdates().then(setPosts)
   }, [])
 
-  const articles = posts?.filter((p) => p.contentType !== 'reel') ?? []
-  const reels = posts?.filter((p) => p.contentType === 'reel') ?? []
+  const articles = posts?.filter((p) => p.contentType === 'article' || p.contentType === 'image') ?? []
+  const reels = posts?.filter((p) => p.contentType === 'video' || p.contentType === 'reel') ?? []
 
   const openModal = (i) => setModalIndex(i)
   const closeModal = () => setModalIndex(null)

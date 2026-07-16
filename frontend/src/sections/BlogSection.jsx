@@ -193,7 +193,8 @@ export default function BlogSection({
 }) {
   const [modalIndex, setModalIndex] = useState(null)
 
-  const featured = articles.find((a) => a.featured) ?? articles[0]
+  // Pick the most recently published featured post; never auto-promote newest post
+  const featured = articles.filter((a) => a.featured).sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))[0] ?? articles[0]
   const secondary = articles.filter((a) => a.id !== featured?.id).slice(0, 3)
 
   if (!featured && reels.length === 0) return null
