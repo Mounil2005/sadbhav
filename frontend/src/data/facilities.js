@@ -70,4 +70,8 @@ export const FACILITIES_CONTENT = {
     heading: 'Hygiene & Safety Standards',
     body: 'All areas of the hospital are maintained under strict infection-control protocols. Regular sterilisation, air filtration, and safety audits ensure a clean and safe environment for every patient and visitor.',
   },
+  labPartner: {
+    heading: 'Blood Sample Collection — In Partnership with Sadbhav Lab',
+    body: 'Sadbhav Hospital is proud to collaborate with Sadbhav Lab. Trained lab staff visit the hospital to collect blood samples directly at the bedside — so patients benefit from accurate diagnostics without leaving the premises.',
+  },
 }
