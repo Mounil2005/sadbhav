@@ -1,4 +1,4 @@
-import { Activity } from 'lucide-react'
+import { Activity, FlaskConical } from 'lucide-react'
 import SectionHeader from '../components/ui/SectionHeader'
 import RevealWrapper from '../components/ui/RevealWrapper'
 import { FACILITIES, FACILITIES_CONTENT } from '../data/facilities'
@@ -108,17 +108,33 @@ export default function FacilitiesSection({
         </RevealWrapper>
 
         <RevealWrapper delay={60}>
-          <div className="mt-10 sm:mt-12 pt-8 sm:pt-10 border-t border-white/10 flex gap-4 items-start">
-            <div className="w-8 h-8 rounded-full bg-medical-500/15 flex items-center justify-center flex-shrink-0 mt-0.5">
-              <Activity size={16} strokeWidth={1.8} className="text-medical-300" aria-hidden="true" />
+          <div className="mt-10 sm:mt-12 pt-8 sm:pt-10 border-t border-white/10 space-y-6">
+            <div className="flex gap-4 items-start">
+              <div className="w-8 h-8 rounded-full bg-medical-500/15 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <Activity size={16} strokeWidth={1.8} className="text-medical-300" aria-hidden="true" />
+              </div>
+              <div>
+                <h4 className="font-display font-semibold text-white text-sm sm:text-base mb-1.5">
+                  {content.hygiene.heading}
+                </h4>
+                <p className="text-white/50 text-xs sm:text-sm font-body leading-relaxed max-w-2xl">
+                  {content.hygiene.body}
+                </p>
+              </div>
             </div>
-            <div>
-              <h4 className="font-display font-semibold text-white text-sm sm:text-base mb-1.5">
-                {content.hygiene.heading}
-              </h4>
-              <p className="text-white/50 text-xs sm:text-sm font-body leading-relaxed max-w-2xl">
-                {content.hygiene.body}
-              </p>
+
+            <div className="flex gap-4 items-start border-t border-white/10 pt-6">
+              <div className="w-8 h-8 rounded-full bg-emerald-500/15 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <FlaskConical size={16} strokeWidth={1.8} className="text-emerald-300" aria-hidden="true" />
+              </div>
+              <div>
+                <h4 className="font-display font-semibold text-white text-sm sm:text-base mb-1.5">
+                  {content.labPartner.heading}
+                </h4>
+                <p className="text-white/50 text-xs sm:text-sm font-body leading-relaxed max-w-2xl">
+                  {content.labPartner.body}
+                </p>
+              </div>
             </div>
           </div>
         </RevealWrapper>
