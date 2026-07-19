@@ -90,17 +90,6 @@ export const SERVICES = [
     featured: false,
     imageUrl: null,
   },
-  {
-    id: 'respiratory-disorders',
-    slug: 'respiratory-disorders',
-    icon: 'Heart',
-    title: 'Respiratory Disorders',
-    description:
-      'Diagnosis and treatment of breathing difficulties, sleep apnoea, bronchitis, and complex respiratory conditions.',
-    tag: 'Pulmonology',
-    featured: false,
-    imageUrl: null,
-  },
 ]
 
 export const SERVICES_CONTENT = {
