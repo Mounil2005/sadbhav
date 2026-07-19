@@ -1,6 +1,6 @@
 export const ABOUT_PILLARS = [
   'Advanced diagnostic and treatment infrastructure',
-  'Specialized team in respiratory and pulmonary medicine',
+  'Specialized team in critical care and respiratory medicine',
   'Patient-first approach with transparent communication',
   'Compassionate care with clinical precision',
   'Continuous education and modern medical practices',

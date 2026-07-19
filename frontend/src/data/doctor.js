@@ -30,7 +30,7 @@ export const DOCTOR_JOURNEY = [
     title: 'Bringing Specialist Care to Jamnagar',
     body: 'Founded Sadbhav Hospital with a singular mission — to make specialist pulmonary and critical care accessible to patients in Jamnagar. Built a Level II ICU, in-house respiratory lab, and a practice guided by compassion and clinical precision.',
     accent: '#1e5fa8',
-    imageUrl: '/vivek sir final.jpg',
+    imageUrl: '/Vivek sir landscape.jpeg',
   },
 ]
 
