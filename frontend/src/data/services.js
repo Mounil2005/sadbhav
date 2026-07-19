@@ -1,4 +1,5 @@
 export const SERVICES = [
+  // Row 1 — image cards
   {
     id: 'pulmonary-care',
     slug: 'pulmonary-care',
@@ -9,17 +10,6 @@ export const SERVICES = [
     tag: 'Respiratory',
     featured: true,
     imageUrl: '/Pulmonary Tests.jpeg',
-  },
-  {
-    id: 'asthma-copd',
-    slug: 'asthma-copd-treatment',
-    icon: 'Stethoscope',
-    title: 'Asthma & COPD',
-    description:
-      'Evidence-based treatment programmes for chronic obstructive pulmonary disease and asthma with long-term management support.',
-    tag: 'Chronic Care',
-    featured: false,
-    imageUrl: null,
   },
   {
     id: 'icu-critical-care',
@@ -33,28 +23,6 @@ export const SERVICES = [
     imageUrl: '/Ventilator.jpeg',
   },
   {
-    id: 'respiratory-disorders',
-    slug: 'respiratory-disorders',
-    icon: 'Heart',
-    title: 'Respiratory Disorders',
-    description:
-      'Diagnosis and treatment of breathing difficulties, sleep apnoea, bronchitis, and complex respiratory conditions.',
-    tag: 'Pulmonology',
-    featured: false,
-    imageUrl: null,
-  },
-  {
-    id: 'preventive-health',
-    slug: 'preventive-health-consultation',
-    icon: 'ShieldPlus',
-    title: 'Preventive Health',
-    description:
-      'Personalised preventive consultations and health screenings designed to detect risk factors early and promote well-being.',
-    tag: 'Wellness',
-    featured: false,
-    imageUrl: null,
-  },
-  {
     id: 'pulmonology-lab',
     slug: 'pulmonology-lab',
     icon: 'FlaskConical',
@@ -65,6 +33,7 @@ export const SERVICES = [
     featured: false,
     imageUrl: '/Bronchoscopy.jpeg',
   },
+  // Row 2 — image cards
   {
     id: 'thoracoscopy',
     slug: 'thoracoscopy',
@@ -97,6 +66,40 @@ export const SERVICES = [
     tag: 'Procedure',
     featured: false,
     imageUrl: '/thoracentesis.jpeg',
+  },
+  // Row 3 — text cards
+  {
+    id: 'preventive-health',
+    slug: 'preventive-health-consultation',
+    icon: 'ShieldPlus',
+    title: 'Preventive Health',
+    description:
+      'Personalised preventive consultations and health screenings designed to detect risk factors early and promote well-being.',
+    tag: 'Wellness',
+    featured: false,
+    imageUrl: null,
+  },
+  {
+    id: 'asthma-copd',
+    slug: 'asthma-copd-treatment',
+    icon: 'Stethoscope',
+    title: 'Asthma & COPD',
+    description:
+      'Evidence-based treatment programmes for chronic obstructive pulmonary disease and asthma with long-term management support.',
+    tag: 'Chronic Care',
+    featured: false,
+    imageUrl: null,
+  },
+  {
+    id: 'respiratory-disorders',
+    slug: 'respiratory-disorders',
+    icon: 'Heart',
+    title: 'Respiratory Disorders',
+    description:
+      'Diagnosis and treatment of breathing difficulties, sleep apnoea, bronchitis, and complex respiratory conditions.',
+    tag: 'Pulmonology',
+    featured: false,
+    imageUrl: null,
   },
 ]
 
