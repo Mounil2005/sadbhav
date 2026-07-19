@@ -8,6 +8,7 @@ export const SERVICES = [
       'Comprehensive evaluation and management of all lung conditions including infections, fibrosis, and occupational lung diseases.',
     tag: 'Respiratory',
     featured: true,
+    imageUrl: '/Pulmonary Tests.jpeg',
   },
   {
     id: 'asthma-copd',
@@ -18,6 +19,7 @@ export const SERVICES = [
       'Evidence-based treatment programmes for chronic obstructive pulmonary disease and asthma with long-term management support.',
     tag: 'Chronic Care',
     featured: false,
+    imageUrl: null,
   },
   {
     id: 'icu-critical-care',
@@ -28,6 +30,7 @@ export const SERVICES = [
       'A fully equipped intensive care unit with advanced life-support systems and round-the-clock specialist monitoring.',
     tag: 'Intensive Care',
     featured: false,
+    imageUrl: '/Ventilator.jpeg',
   },
   {
     id: 'respiratory-disorders',
@@ -38,6 +41,7 @@ export const SERVICES = [
       'Diagnosis and treatment of breathing difficulties, sleep apnoea, bronchitis, and complex respiratory conditions.',
     tag: 'Pulmonology',
     featured: false,
+    imageUrl: null,
   },
   {
     id: 'preventive-health',
@@ -48,6 +52,7 @@ export const SERVICES = [
       'Personalised preventive consultations and health screenings designed to detect risk factors early and promote well-being.',
     tag: 'Wellness',
     featured: false,
+    imageUrl: null,
   },
   {
     id: 'pulmonology-lab',
@@ -58,6 +63,40 @@ export const SERVICES = [
       'Advanced in-house procedures including bronchoscopy, thoracoscopy, pulmonary function testing (PFT), intercostal drain (ICD), and lung biopsy.',
     tag: 'Diagnostics',
     featured: false,
+    imageUrl: '/Bronchoscopy.jpeg',
+  },
+  {
+    id: 'thoracoscopy',
+    slug: 'thoracoscopy',
+    icon: 'Microscope',
+    title: 'Thoracoscopy',
+    description:
+      'Minimally invasive procedure to examine the pleural space and lungs, used for diagnosis and treatment of pleural diseases.',
+    tag: 'Procedure',
+    featured: false,
+    imageUrl: '/Thoracoscopy.jpeg',
+  },
+  {
+    id: 'sonography',
+    slug: 'sonography',
+    icon: 'ScanLine',
+    title: 'Sonography',
+    description:
+      'On-site ultrasound imaging for chest and abdominal assessment, guiding procedures and providing real-time diagnostic support.',
+    tag: 'Diagnostics',
+    featured: false,
+    imageUrl: '/Sonography.jpeg',
+  },
+  {
+    id: 'thoracentesis',
+    slug: 'thoracentesis',
+    icon: 'Syringe',
+    title: 'Thoracentesis',
+    description:
+      'Safe, guided removal of fluid from the pleural space for diagnostic analysis or therapeutic relief of breathing difficulty.',
+    tag: 'Procedure',
+    featured: false,
+    imageUrl: '/thoracentesis.jpeg',
   },
 ]
 

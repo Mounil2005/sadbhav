@@ -22,7 +22,7 @@ export const SITE = {
 }
 
 export const VISITING_HOURS = [
-  { day: 'Monday - Saturday', time: '10:00 AM - 2:30 PM\n6:00 PM - 9:30 PM', timeShort: '10 AM - 9:30 PM', isEmergency: false },
+  { day: 'Monday - Saturday', time: '10:00 AM - 1:30 PM\n6:00 PM - 8:30 PM', timeShort: '10 AM - 9:30 PM', isEmergency: false },
   { day: 'Emergency', time: '24 Hours / 7 Days', timeShort: '24 / 7', isEmergency: true },
 ]
 
