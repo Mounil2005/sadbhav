@@ -77,7 +77,7 @@ export const SERVICES = [
       'Evidence-based treatment programmes for chronic obstructive pulmonary disease and asthma with long-term management support.',
     tag: 'Chronic Care',
     featured: false,
-    imageUrl: null,
+    imageUrl: '/Ashtma.png',
   },
   {
     id: 'preventive-health',
