@@ -69,17 +69,6 @@ export const SERVICES = [
   },
   // Row 3 — text cards
   {
-    id: 'preventive-health',
-    slug: 'preventive-health-consultation',
-    icon: 'ShieldPlus',
-    title: 'Preventive Health',
-    description:
-      'Personalised preventive consultations and health screenings designed to detect risk factors early and promote well-being.',
-    tag: 'Wellness',
-    featured: false,
-    imageUrl: null,
-  },
-  {
     id: 'asthma-copd',
     slug: 'asthma-copd-treatment',
     icon: 'Stethoscope',
@@ -87,6 +76,17 @@ export const SERVICES = [
     description:
       'Evidence-based treatment programmes for chronic obstructive pulmonary disease and asthma with long-term management support.',
     tag: 'Chronic Care',
+    featured: false,
+    imageUrl: null,
+  },
+  {
+    id: 'preventive-health',
+    slug: 'preventive-health-consultation',
+    icon: 'ShieldPlus',
+    title: 'Preventive Health',
+    description:
+      'Personalised preventive consultations and health screenings designed to detect risk factors early and promote well-being.',
+    tag: 'Wellness',
     featured: false,
     imageUrl: null,
   },
