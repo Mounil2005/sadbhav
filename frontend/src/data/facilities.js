@@ -26,7 +26,7 @@ export const FACILITIES = [
     detail:
       'Calm, clean, and comfortable waiting area for family members with seating and refreshment access.',
     spec: 'Family-friendly',
-    imageUrl: '/Reception.png',
+    imageUrl: '/Reception.jpeg',
     bgGradient: null,
   },
   {
@@ -61,7 +61,7 @@ export const FACILITIES_CONTENT = {
     body: 'All areas of the hospital are maintained under strict infection-control protocols. Regular sterilisation, air filtration, and safety audits ensure a clean and safe environment for every patient and visitor.',
   },
   labPartner: {
-    heading: 'Blood Sample Collection — In Partnership with Sadbhav Lab',
-    body: 'Sadbhav Hospital is proud to collaborate with Sadbhav Lab. Trained lab staff visit the hospital to collect blood samples directly at the bedside — so patients benefit from accurate diagnostics without leaving the premises.',
+    heading: 'Blood Sample Collection',
+    body: 'Sadbhav Hospital works in association with Sadbhav Lab. Trained lab staff visit the hospital to collect blood samples directly at the bedside, ensuring accurate diagnostics without the patient needing to leave the premises.',
   },
 }
