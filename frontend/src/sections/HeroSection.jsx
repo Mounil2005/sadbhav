@@ -5,7 +5,7 @@ import RevealWrapper from '../components/ui/RevealWrapper'
 import { SITE, TRUST_BADGES } from '../data/site'
 
 const HERO_SLIDES = [
-  { src: '/Reception.png', alt: 'Sadbhav Hospital reception' },
+  { src: '/Reception.jpeg', alt: 'Sadbhav Hospital reception' },
   { src: '/AC Private room.png', alt: 'AC private rooms' },
   { src: '/Pulmonary Tests.jpeg', alt: 'Respiratory & pulmonary lab' },
   { src: '/General Ward.png', alt: 'General ward' },
