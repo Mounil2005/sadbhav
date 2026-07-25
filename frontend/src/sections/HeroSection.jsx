@@ -7,7 +7,7 @@ import { SITE, TRUST_BADGES } from '../data/site'
 const HERO_SLIDES = [
   { src: '/Reception.png', alt: 'Sadbhav Hospital reception' },
   { src: '/AC Private room.png', alt: 'AC private rooms' },
-  { src: '/Consultation Cabin.png', alt: 'Consultation cabin' },
+  { src: '/icu.png', alt: 'ICU — Intensive Care Unit' },
   { src: '/General Ward.png', alt: 'General ward' },
 ]
 

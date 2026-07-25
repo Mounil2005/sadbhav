@@ -40,13 +40,13 @@ export const FACILITIES = [
     bgGradient: null,
   },
   {
-    id: 'consultation-cabin',
-    icon: 'Stethoscope',
-    name: 'Consultation Cabin',
+    id: 'icu',
+    icon: 'Activity',
+    name: 'Intensive Care Unit',
     detail:
-      'Dedicated, private consultation cabin for in-depth patient discussions, reviews, and follow-ups.',
-    spec: 'Fully private',
-    imageUrl: '/Consultation Cabin.png',
+      'Fully equipped Level II ICU with advanced life-support, ventilators, and round-the-clock specialist monitoring.',
+    spec: 'Level II ICU',
+    imageUrl: '/icu.png',
     bgGradient: null,
   },
   {
