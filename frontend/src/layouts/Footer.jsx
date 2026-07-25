@@ -122,6 +122,15 @@ export default function Footer() {
             ))}
           </div>
         </div>
+        <div className="max-w-7xl mx-auto px-6 pb-4 text-center text-[11px] font-sans text-white/20">
+          Designed &amp; developed by{' '}
+          <a
+            href="tel:+919327088700"
+            className="text-white/30 hover:text-white/50 transition-colors"
+          >
+            Mounil Kankhara · +91 93270 88700
+          </a>
+        </div>
       </div>
     </footer>
   )
