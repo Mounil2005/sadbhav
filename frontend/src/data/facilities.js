@@ -40,24 +40,14 @@ export const FACILITIES = [
     bgGradient: null,
   },
   {
-    id: 'icu',
-    icon: 'Activity',
-    name: 'Intensive Care Unit',
-    detail:
-      'Fully equipped Level II ICU with advanced life-support, ventilators, and round-the-clock specialist monitoring.',
-    spec: 'Level II ICU',
-    imageUrl: '/icu.png',
-    bgGradient: null,
-  },
-  {
     id: 'respiratory-lab',
     icon: 'Wind',
     name: 'Respiratory Lab',
     detail:
       'On-site spirometry, nebulisation, and pulmonary function testing for accurate respiratory diagnosis.',
     spec: 'In-house diagnostics',
-    imageUrl: null,
-    bgGradient: 'linear-gradient(160deg, #1e3a6b 0%, #0d2040 100%)',
+    imageUrl: '/Pulmonary Tests.jpeg',
+    bgGradient: null,
   },
 ]
 
