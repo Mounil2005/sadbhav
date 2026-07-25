@@ -88,7 +88,7 @@ export const SERVICES = [
       'Personalised preventive consultations and health screenings designed to detect risk factors early and promote well-being.',
     tag: 'Wellness',
     featured: false,
-    imageUrl: null,
+    imageUrl: '/preventive health.png',
   },
 ]
 
