@@ -8,7 +8,7 @@ export const sanityWriteClient = createClient({
   token: import.meta.env.VITE_SANITY_WRITE_TOKEN,
 })
 
-export async function submitReview({ name, rating, reviewText, condition, imageFile }) {
+export async function submitReview({ rating, reviewText, condition, imageFile }) {
   let imageAsset = null
 
   if (imageFile) {
@@ -19,7 +19,6 @@ export async function submitReview({ name, rating, reviewText, condition, imageF
 
   return sanityWriteClient.create({
     _type: 'review',
-    name,
     rating,
     reviewText,
     condition: condition || undefined,

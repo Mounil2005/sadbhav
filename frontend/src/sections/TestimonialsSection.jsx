@@ -41,28 +41,27 @@ function GoogleBadge() {
   )
 }
 
-function ReviewItem({ name, condition, review, rating, verified, imageUrl, reply, source, profilePhotoUrl }) {
+function ReviewItem({ condition, review, rating, verified, imageUrl, reply, source, profilePhotoUrl }) {
   const isGoogle = source === 'google'
   return (
     <article className="bg-white rounded-2xl border border-warm-100 shadow-sm overflow-hidden">
       {imageUrl && (
         <div className="w-full h-48 overflow-hidden">
-          <img src={imageUrl} alt={`Photo from ${name}`} loading="lazy" className="w-full h-full object-cover" />
+          <img src={imageUrl} alt="Patient review" loading="lazy" className="w-full h-full object-cover" />
         </div>
       )}
       <div className="p-5 sm:p-6">
         <div className="flex items-center justify-between gap-2 mb-3">
           <div className="flex items-center gap-2.5">
             {profilePhotoUrl ? (
-              <img src={profilePhotoUrl} alt={name} className="w-9 h-9 rounded-full object-cover flex-shrink-0" referrerPolicy="no-referrer" />
+              <img src={profilePhotoUrl} alt="Reviewer" className="w-9 h-9 rounded-full object-cover flex-shrink-0" referrerPolicy="no-referrer" />
             ) : (
               <div className="w-9 h-9 rounded-full bg-medical-100 flex items-center justify-center text-medical-600 font-sans font-bold text-sm flex-shrink-0">
-                {name?.[0]?.toUpperCase()}
+                P
               </div>
             )}
             <div>
-              <div className="font-sans font-semibold text-navy-700 text-sm">{name}</div>
-              {condition && <div className="text-xs text-warm-400 mt-0.5">{condition}</div>}
+              {condition && <div className="text-xs text-warm-400">{condition}</div>}
             </div>
           </div>
           {isGoogle ? <GoogleBadge /> : verified ? <VerifiedBadge /> : null}
@@ -123,12 +122,11 @@ function VideoTestimonialCard({ review, onClick }) {
         </div>
 
         {/* Bottom info */}
-        <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent p-3 pt-10">
-          <div className="font-sans font-semibold text-white text-xs leading-tight">{review.name}</div>
-          {(review.caption || review.condition) && (
-            <div className="text-white/60 text-[10px] mt-0.5">{review.caption || review.condition}</div>
-          )}
-        </div>
+        {(review.caption || review.condition) && (
+          <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent p-3 pt-10">
+            <div className="text-white/80 text-[11px]">{review.caption || review.condition}</div>
+          </div>
+        )}
       </div>
     </button>
   )
@@ -202,9 +200,8 @@ function VideoModal({ review, onClose, onPrev, onNext, hasPrev, hasNext }) {
 
         {/* Patient info */}
         <div className="mt-3 text-center">
-          <div className="text-white font-sans font-semibold text-sm">{review.name}</div>
           {(review.caption || review.condition) && (
-            <div className="text-white/50 text-xs mt-0.5">{review.caption || review.condition}</div>
+            <div className="text-white/60 text-xs">{review.caption || review.condition}</div>
           )}
           {review.rating && (
             <div className="mt-1 text-amber-400 text-sm">{'★'.repeat(review.rating)}</div>
@@ -264,7 +261,7 @@ function StarPicker({ value, onChange }) {
 }
 
 function ReviewForm({ onSubmitted }) {
-  const [form, setForm] = useState({ name: '', rating: 0, reviewText: '', condition: '' })
+  const [form, setForm] = useState({ rating: 0, reviewText: '', condition: '' })
   const [imageFile, setImageFile] = useState(null)
   const [imagePreview, setImagePreview] = useState(null)
   const [status, setStatus] = useState('idle')
@@ -287,7 +284,7 @@ function ReviewForm({ onSubmitted }) {
     try {
       await submitReview({ ...form, imageFile })
       notifyAdminOfReview(form).catch(() => {})
-      onSubmitted({ name: form.name, condition: form.condition, reviewText: form.reviewText, rating: form.rating, imageUrl: imagePreview })
+      onSubmitted({ condition: form.condition, reviewText: form.reviewText, rating: form.rating, imageUrl: imagePreview })
       setStatus('success')
     } catch {
       setStatus('error')
@@ -345,27 +342,15 @@ function ReviewForm({ onSubmitted }) {
             <StarPicker value={form.rating} onChange={(r) => setForm((f) => ({ ...f, rating: r }))} />
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-4">
-            <div>
-              <label htmlFor="r-name" className="block text-sm font-sans font-semibold text-navy-700 mb-1.5">
-                Your Name <span className="text-crimson-500">*</span>
-              </label>
-              <input
-                id="r-name" name="name" type="text" value={form.name} onChange={handleChange} required
-                placeholder="e.g. Ramesh Patel"
-                className="w-full px-4 py-2.5 rounded-xl border border-warm-200 bg-warm-50 text-sm text-navy-700 placeholder:text-warm-300 focus:outline-none focus:ring-2 focus:ring-medical-300 transition"
-              />
-            </div>
-            <div>
-              <label htmlFor="r-condition" className="block text-sm font-sans font-semibold text-navy-700 mb-1.5">
-                Treated For <span className="text-warm-400 font-normal">(optional)</span>
-              </label>
-              <input
-                id="r-condition" name="condition" type="text" value={form.condition} onChange={handleChange}
-                placeholder="e.g. Asthma, COPD"
-                className="w-full px-4 py-2.5 rounded-xl border border-warm-200 bg-warm-50 text-sm text-navy-700 placeholder:text-warm-300 focus:outline-none focus:ring-2 focus:ring-medical-300 transition"
-              />
-            </div>
+          <div>
+            <label htmlFor="r-condition" className="block text-sm font-sans font-semibold text-navy-700 mb-1.5">
+              Treated For <span className="text-warm-400 font-normal">(optional)</span>
+            </label>
+            <input
+              id="r-condition" name="condition" type="text" value={form.condition} onChange={handleChange}
+              placeholder="e.g. Asthma, COPD"
+              className="w-full px-4 py-2.5 rounded-xl border border-warm-200 bg-warm-50 text-sm text-navy-700 placeholder:text-warm-300 focus:outline-none focus:ring-2 focus:ring-medical-300 transition"
+            />
           </div>
 
           <div>
@@ -409,7 +394,7 @@ function ReviewForm({ onSubmitted }) {
           <div className="flex justify-end pt-1">
             <button
               type="submit"
-              disabled={!form.name || !form.rating || !form.reviewText || status === 'submitting'}
+              disabled={!form.rating || !form.reviewText || status === 'submitting'}
               className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {status === 'submitting' ? 'Submitting...' : 'Submit Review'}
@@ -456,7 +441,6 @@ export default function TestimonialsSection({
 
   const sanityMapped = textSanityReviews.map((r) => ({
     id: r._id,
-    name: r.name,
     condition: r.condition ?? '',
     review: r.reviewText,
     rating: r.rating,
@@ -472,7 +456,7 @@ export default function TestimonialsSection({
 
   function handleNewReview(data) {
     setSanityReviews((prev) => [
-      { _id: `temp-${Date.now()}`, ...data, reviewType: 'text', verified: false, reply: null },
+      { _id: `temp-${Date.now()}`, reviewType: 'text', verified: false, reply: null, ...data },
       ...prev,
     ])
   }

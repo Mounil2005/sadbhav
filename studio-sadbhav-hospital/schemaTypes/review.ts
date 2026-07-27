@@ -27,13 +27,6 @@ export const review = defineType({
       validation: (r) => r.required(),
     }),
     defineField({
-      name: 'name',
-      title: 'Patient Name',
-      type: 'string',
-      group: 'content',
-      validation: (r) => r.required(),
-    }),
-    defineField({
       name: 'condition',
       title: 'Treated For (optional)',
       type: 'string',
@@ -156,21 +149,20 @@ export const review = defineType({
   ],
   preview: {
     select: {
-      title: 'name',
       reviewType: 'reviewType',
       rating: 'rating',
       approved: 'approved',
       submittedAt: 'submittedAt',
       media: 'image',
     },
-    prepare({title, reviewType, rating, approved, submittedAt, media}) {
+    prepare({reviewType, rating, approved, submittedAt, media}) {
       const stars = '★'.repeat(rating ?? 0)
       const date = submittedAt ? new Date(submittedAt).toLocaleDateString('en-IN') : ''
       const status = approved ? '✅ Visible' : '🚫 Hidden'
       const type = reviewType === 'video' ? '🎥 Video' : '💬 Text'
       return {
-        title,
-        subtitle: `${type} · ${stars} · ${status} · ${date}`,
+        title: `${type} Review`,
+        subtitle: `${stars} · ${status} · ${date}`,
         media,
       }
     },
