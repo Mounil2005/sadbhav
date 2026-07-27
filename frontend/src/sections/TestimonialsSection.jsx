@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { ExternalLink } from 'lucide-react'
+import { useState, useEffect, useRef } from 'react'
+import { ExternalLink, Play, X, ChevronLeft, ChevronRight } from 'lucide-react'
 import StarRating from '../components/ui/StarRating'
 import SectionHeader from '../components/ui/SectionHeader'
 import RevealWrapper from '../components/ui/RevealWrapper'
@@ -82,6 +82,158 @@ function ReviewItem({ name, condition, review, rating, verified, imageUrl, reply
         )}
       </div>
     </article>
+  )
+}
+
+function VideoTestimonialCard({ review, onClick }) {
+  const videoSrc = review.videoUrl ?? review.videoFileUrl ?? null
+
+  return (
+    <button
+      onClick={onClick}
+      className="group flex-shrink-0 w-44 sm:w-48 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-200 text-left"
+      aria-label={`Play testimonial by ${review.name}`}
+    >
+      <div className="relative bg-navy-900" style={{ aspectRatio: '9/16' }}>
+        <div className="absolute inset-0 overflow-hidden">
+          {review.imageUrl ? (
+            <img src={review.imageUrl} alt={review.name} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+          ) : videoSrc ? (
+            <video
+              src={`${videoSrc}#t=0.001`}
+              preload="metadata"
+              muted
+              playsInline
+              onLoadedMetadata={(e) => { e.currentTarget.currentTime = 0.001 }}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <div className="w-full h-full bg-gradient-to-b from-navy-700 to-navy-900" />
+          )}
+        </div>
+
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors" />
+
+        {/* Play button */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-12 h-12 rounded-full bg-white/90 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-200">
+            <Play size={20} fill="#1e5fa8" className="text-medical-600 ml-0.5" />
+          </div>
+        </div>
+
+        {/* Bottom info */}
+        <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent p-3 pt-10">
+          <div className="font-sans font-semibold text-white text-xs leading-tight">{review.name}</div>
+          {(review.caption || review.condition) && (
+            <div className="text-white/60 text-[10px] mt-0.5">{review.caption || review.condition}</div>
+          )}
+        </div>
+      </div>
+    </button>
+  )
+}
+
+function VideoModal({ review, onClose, onPrev, onNext, hasPrev, hasNext }) {
+  const videoRef = useRef(null)
+  const videoSrc = review.videoUrl ?? review.videoFileUrl ?? null
+
+  useEffect(() => {
+    function onKey(e) {
+      if (e.key === 'Escape') onClose()
+      if (e.key === 'ArrowLeft' && hasPrev) onPrev()
+      if (e.key === 'ArrowRight' && hasNext) onNext()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [onClose, onPrev, onNext, hasPrev, hasNext])
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = '' }
+  }, [])
+
+  function isYouTube(url) {
+    return url && (url.includes('youtube.com') || url.includes('youtu.be'))
+  }
+
+  function getYouTubeEmbed(url) {
+    const m = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&?/]+)/)
+    return m ? `https://www.youtube.com/embed/${m[1]}?autoplay=1` : null
+  }
+
+  return (
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/85 backdrop-blur-sm p-4"
+      onClick={(e) => { if (e.target === e.currentTarget) onClose() }}
+    >
+      <div className="relative w-full max-w-sm" style={{ maxHeight: '90svh' }}>
+        {/* Close */}
+        <button
+          onClick={onClose}
+          className="absolute -top-10 right-0 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors z-10"
+          aria-label="Close"
+        >
+          <X size={16} />
+        </button>
+
+        {/* Video */}
+        <div className="rounded-2xl overflow-hidden bg-black" style={{ aspectRatio: '9/16' }}>
+          {videoSrc && isYouTube(videoSrc) ? (
+            <iframe
+              src={getYouTubeEmbed(videoSrc)}
+              className="w-full h-full"
+              allow="autoplay; fullscreen"
+              allowFullScreen
+            />
+          ) : videoSrc ? (
+            <video
+              ref={videoRef}
+              src={videoSrc}
+              controls
+              autoPlay
+              playsInline
+              className="w-full h-full object-contain bg-black"
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center text-white/40 text-sm">No video available</div>
+          )}
+        </div>
+
+        {/* Patient info */}
+        <div className="mt-3 text-center">
+          <div className="text-white font-sans font-semibold text-sm">{review.name}</div>
+          {(review.caption || review.condition) && (
+            <div className="text-white/50 text-xs mt-0.5">{review.caption || review.condition}</div>
+          )}
+          {review.rating && (
+            <div className="mt-1 text-amber-400 text-sm">{'★'.repeat(review.rating)}</div>
+          )}
+        </div>
+
+        {/* Prev / Next */}
+        {(hasPrev || hasNext) && (
+          <div className="absolute top-1/2 -translate-y-1/2 inset-x-0 flex justify-between pointer-events-none px-2">
+            <button
+              onClick={onPrev}
+              disabled={!hasPrev}
+              className="pointer-events-auto w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 disabled:opacity-0 flex items-center justify-center text-white transition-colors"
+              aria-label="Previous"
+            >
+              <ChevronLeft size={18} />
+            </button>
+            <button
+              onClick={onNext}
+              disabled={!hasNext}
+              className="pointer-events-auto w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 disabled:opacity-0 flex items-center justify-center text-white transition-colors"
+              aria-label="Next"
+            >
+              <ChevronRight size={18} />
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
   )
 }
 
@@ -287,6 +439,7 @@ export default function TestimonialsSection({
   const [sanityReviews, setSanityReviews] = useState([])
   const [googleReviews, setGoogleReviews] = useState([])
   const [visitorCount, setVisitorCount] = useState(null)
+  const [videoModalIndex, setVideoModalIndex] = useState(null)
 
   useEffect(() => {
     fetchApprovedReviews().then(setSanityReviews)
@@ -297,7 +450,11 @@ export default function TestimonialsSection({
       .catch(() => {})
   }, [])
 
-  const sanityMapped = sanityReviews.map((r) => ({
+  // Split Sanity reviews into text and video
+  const videoReviews = sanityReviews.filter((r) => r.reviewType === 'video')
+  const textSanityReviews = sanityReviews.filter((r) => r.reviewType !== 'video')
+
+  const sanityMapped = textSanityReviews.map((r) => ({
     id: r._id,
     name: r.name,
     condition: r.condition ?? '',
@@ -311,17 +468,17 @@ export default function TestimonialsSection({
   }))
 
   const allReviews = [...sanityMapped, ...googleReviews]
-
   const displayed = allReviews.length > 0 ? allReviews : TESTIMONIALS
 
   function handleNewReview(data) {
     setSanityReviews((prev) => [
-      { _id: `temp-${Date.now()}`, ...data, verified: false, reply: null },
+      { _id: `temp-${Date.now()}`, ...data, reviewType: 'text', verified: false, reply: null },
       ...prev,
     ])
   }
 
   return (
+    <>
     <section id="reviews" className="py-20 sm:py-24 bg-warm-50 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
 
@@ -336,6 +493,28 @@ export default function TestimonialsSection({
           </div>
         </RevealWrapper>
 
+        {/* ── Video Testimonials ── */}
+        {videoReviews.length > 0 && (
+          <RevealWrapper>
+            <div className="mb-12 sm:mb-16">
+              <h3 className="font-display font-semibold text-xl sm:text-2xl text-navy-700 mb-5">
+                Patient Stories
+              </h3>
+              <div className="flex gap-3 overflow-x-auto pb-3 snap-x snap-mandatory -mx-4 sm:-mx-6 px-4 sm:px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                {videoReviews.map((r, i) => (
+                  <div key={r._id} className="snap-start flex-shrink-0">
+                    <VideoTestimonialCard
+                      review={r}
+                      onClick={() => setVideoModalIndex(i)}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </RevealWrapper>
+        )}
+
+        {/* ── Text Reviews scrolling marquee ── */}
         <div className="overflow-hidden -mx-4 sm:-mx-6">
           <style>{`
             @keyframes reviews-scroll {
@@ -383,5 +562,18 @@ export default function TestimonialsSection({
         </RevealWrapper>
       </div>
     </section>
+
+    {/* Video modal */}
+    {videoModalIndex !== null && videoReviews.length > 0 && (
+      <VideoModal
+        review={videoReviews[videoModalIndex]}
+        hasPrev={videoModalIndex > 0}
+        hasNext={videoModalIndex < videoReviews.length - 1}
+        onClose={() => setVideoModalIndex(null)}
+        onPrev={() => setVideoModalIndex((i) => Math.max(0, i - 1))}
+        onNext={() => setVideoModalIndex((i) => Math.min(videoReviews.length - 1, i + 1))}
+      />
+    )}
+    </>
   )
 }
