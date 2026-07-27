@@ -175,18 +175,26 @@ function VideoModal({ review, onClose, onPrev, onNext, hasPrev, hasNext }) {
       className="fixed inset-0 z-[100] flex items-center justify-center bg-black/85 backdrop-blur-sm p-4"
       onClick={(e) => { if (e.target === e.currentTarget) onClose() }}
     >
-      <div className="relative w-full max-w-sm" style={{ maxHeight: '90svh' }}>
+      <div className="relative w-full max-w-xs flex flex-col" style={{ maxHeight: '95svh' }}>
         {/* Close */}
         <button
           onClick={onClose}
-          className="absolute -top-10 right-0 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors z-10"
+          className="absolute -top-9 right-0 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors z-10"
           aria-label="Close"
         >
           <X size={16} />
         </button>
 
-        {/* Video */}
-        <div className="rounded-2xl overflow-hidden bg-black" style={{ aspectRatio: '9/16' }}>
+        {/* Video — capped so caption always fits below */}
+        <div
+          className="rounded-2xl overflow-hidden bg-black mx-auto flex-shrink-0"
+          style={{
+            aspectRatio: '9/16',
+            maxHeight: '62svh',
+            maxWidth: 'calc(62svh * 9 / 16)',
+            width: '100%',
+          }}
+        >
           {videoSrc && isYouTube(videoSrc) ? (
             <iframe
               src={getYouTubeEmbed(videoSrc)}
@@ -208,8 +216,8 @@ function VideoModal({ review, onClose, onPrev, onNext, hasPrev, hasNext }) {
           )}
         </div>
 
-        {/* Patient info + description */}
-        <div className="mt-3">
+        {/* Patient info + description — scrollable if description is long */}
+        <div className="mt-3 overflow-y-auto" style={{ maxHeight: '28svh' }}>
           <div className="flex items-center justify-between gap-3">
             <div>
               {(review.caption || review.condition) && (
