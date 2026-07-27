@@ -91,7 +91,7 @@ function VideoTestimonialCard({ review, onClick }) {
     <button
       onClick={onClick}
       className="group flex-shrink-0 w-44 sm:w-48 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-200 text-left"
-      aria-label={`Play testimonial by ${review.name}`}
+      aria-label="Play patient testimonial"
     >
       <div className="relative bg-navy-900" style={{ aspectRatio: '9/16' }}>
         <div className="absolute inset-0 overflow-hidden">
@@ -172,29 +172,29 @@ function VideoModal({ review, onClose, onPrev, onNext, hasPrev, hasNext }) {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/85 backdrop-blur-sm p-4"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/85 backdrop-blur-sm p-2 sm:p-4"
       onClick={(e) => { if (e.target === e.currentTarget) onClose() }}
     >
-      <div className="relative w-full max-w-xs flex flex-col" style={{ maxHeight: '95svh' }}>
-        {/* Close */}
-        <button
-          onClick={onClose}
-          className="absolute -top-9 right-0 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors z-10"
-          aria-label="Close"
-        >
-          <X size={16} />
-        </button>
+      <div className="relative w-full max-w-xs flex flex-col" style={{ maxHeight: '96svh' }}>
 
         {/* Video — capped so caption always fits below */}
         <div
-          className="rounded-2xl overflow-hidden bg-black mx-auto flex-shrink-0"
+          className="relative rounded-2xl overflow-hidden bg-black mx-auto flex-shrink-0"
           style={{
             aspectRatio: '9/16',
-            maxHeight: '62svh',
-            maxWidth: 'calc(62svh * 9 / 16)',
+            maxHeight: '65svh',
+            maxWidth: 'calc(65svh * 9 / 16)',
             width: '100%',
           }}
         >
+          {/* Close inside video — never clipped on phones */}
+          <button
+            onClick={onClose}
+            className="absolute top-2 right-2 z-20 w-9 h-9 rounded-full bg-black/50 hover:bg-black/70 flex items-center justify-center text-white transition-colors"
+            aria-label="Close"
+          >
+            <X size={16} />
+          </button>
           {videoSrc && isYouTube(videoSrc) ? (
             <iframe
               src={getYouTubeEmbed(videoSrc)}
@@ -216,12 +216,38 @@ function VideoModal({ review, onClose, onPrev, onNext, hasPrev, hasNext }) {
           )}
         </div>
 
-        {/* Patient info + description — scrollable if description is long */}
-        <div className="mt-3 overflow-y-auto" style={{ maxHeight: '28svh' }}>
-          <div className="flex items-center justify-between gap-3">
+          {/* Prev / Next — inside video so touch targets stay within the video */}
+          {(hasPrev || hasNext) && (
+            <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between pointer-events-none px-2 z-10">
+              <button
+                onClick={onPrev}
+                disabled={!hasPrev}
+                className="pointer-events-auto w-10 h-10 rounded-full bg-black/40 hover:bg-black/60 disabled:opacity-0 flex items-center justify-center text-white transition-colors"
+                aria-label="Previous"
+              >
+                <ChevronLeft size={20} />
+              </button>
+              <button
+                onClick={onNext}
+                disabled={!hasNext}
+                className="pointer-events-auto w-10 h-10 rounded-full bg-black/40 hover:bg-black/60 disabled:opacity-0 flex items-center justify-center text-white transition-colors"
+                aria-label="Next"
+              >
+                <ChevronRight size={20} />
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Caption + description — scrollable, always visible */}
+        <div
+          className="mt-2 overflow-y-auto"
+          style={{ maxHeight: '26svh', WebkitOverflowScrolling: 'touch' }}
+        >
+          <div className="flex items-center justify-between gap-3 px-1 py-2">
             <div>
               {(review.caption || review.condition) && (
-                <div className="text-white/70 text-xs">{review.caption || review.condition}</div>
+                <div className="text-white/80 text-xs font-sans">{review.caption || review.condition}</div>
               )}
               {review.rating && (
                 <div className="text-amber-400 text-sm mt-0.5">{'★'.repeat(review.rating)}</div>
@@ -230,40 +256,18 @@ function VideoModal({ review, onClose, onPrev, onNext, hasPrev, hasNext }) {
             {review.description && (
               <button
                 onClick={() => setExpanded((v) => !v)}
-                className="text-medical-300 text-xs font-sans font-medium flex-shrink-0 hover:text-medical-200 transition-colors"
+                className="text-medical-300 text-xs font-sans font-medium flex-shrink-0 hover:text-medical-200 transition-colors py-1 px-2"
               >
                 {expanded ? 'See less ↑' : 'See more ↓'}
               </button>
             )}
           </div>
           {review.description && expanded && (
-            <p className="mt-3 text-white/70 text-xs leading-relaxed border-t border-white/10 pt-3">
+            <p className="px-1 pb-3 text-white/65 text-xs leading-relaxed border-t border-white/10 pt-2">
               {review.description}
             </p>
           )}
         </div>
-
-        {/* Prev / Next */}
-        {(hasPrev || hasNext) && (
-          <div className="absolute top-1/2 -translate-y-1/2 inset-x-0 flex justify-between pointer-events-none px-2">
-            <button
-              onClick={onPrev}
-              disabled={!hasPrev}
-              className="pointer-events-auto w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 disabled:opacity-0 flex items-center justify-center text-white transition-colors"
-              aria-label="Previous"
-            >
-              <ChevronLeft size={18} />
-            </button>
-            <button
-              onClick={onNext}
-              disabled={!hasNext}
-              className="pointer-events-auto w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 disabled:opacity-0 flex items-center justify-center text-white transition-colors"
-              aria-label="Next"
-            >
-              <ChevronRight size={18} />
-            </button>
-          </div>
-        )}
       </div>
     </div>
   )
