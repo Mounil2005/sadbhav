@@ -90,13 +90,14 @@ function VideoTestimonialCard({ review, onClick }) {
   return (
     <button
       onClick={onClick}
-      className="group flex-shrink-0 w-44 sm:w-48 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-200 text-left"
+      className="group flex-shrink-0 w-44 sm:w-48 text-left"
       aria-label="Play patient testimonial"
     >
-      <div className="relative bg-navy-900" style={{ aspectRatio: '9/16' }}>
+      {/* Thumbnail */}
+      <div className="relative bg-navy-900 rounded-2xl overflow-hidden shadow-sm group-hover:shadow-lg transition-shadow duration-200" style={{ aspectRatio: '9/16' }}>
         <div className="absolute inset-0 overflow-hidden">
           {review.imageUrl ? (
-            <img src={review.imageUrl} alt={review.name} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+            <img src={review.imageUrl} alt="" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
           ) : videoSrc ? (
             <video
               src={`${videoSrc}#t=0.001`}
@@ -111,7 +112,6 @@ function VideoTestimonialCard({ review, onClick }) {
           )}
         </div>
 
-        {/* Overlay */}
         <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors" />
 
         {/* Play button */}
@@ -121,18 +121,22 @@ function VideoTestimonialCard({ review, onClick }) {
           </div>
         </div>
 
-        {/* Bottom info */}
-        <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-3 pt-10">
-          {(review.caption || review.condition) && (
+        {/* Caption overlay */}
+        {(review.caption || review.condition) && (
+          <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-3 pt-8">
             <div className="text-white text-[11px] font-sans font-medium leading-snug line-clamp-2">
               {review.caption || review.condition}
             </div>
-          )}
-          {review.description && (
-            <div className="text-medical-300 text-[10px] font-sans mt-1">See more →</div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
+
+      {/* Stars — always visible directly below the card */}
+      {review.rating && (
+        <div className="mt-2 px-1 text-amber-400 text-base tracking-wide">
+          {'★'.repeat(review.rating)}
+        </div>
+      )}
     </button>
   )
 }
