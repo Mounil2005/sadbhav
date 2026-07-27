@@ -58,10 +58,19 @@ export const review = defineType({
     }),
     defineField({
       name: 'caption',
-      title: 'Video Caption (optional)',
+      title: 'Caption (short — shown on card)',
       type: 'string',
       group: 'content',
-      description: 'A short one-line summary shown on the video card, e.g. "Recovered from severe COPD".',
+      description: 'A short one-line label shown on the video card, e.g. "Recovered from severe COPD".',
+      hidden: ({document}) => document?.reviewType !== 'video',
+    }),
+    defineField({
+      name: 'description',
+      title: 'Full Description (shown when expanded)',
+      type: 'text',
+      rows: 5,
+      group: 'content',
+      description: 'The full patient story. Shown in the popup when someone clicks "See more" on the video card.',
       hidden: ({document}) => document?.reviewType !== 'video',
     }),
 

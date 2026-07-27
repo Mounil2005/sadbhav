@@ -124,6 +124,7 @@ const APPROVED_REVIEWS_QUERY = `
     reviewType,
     reviewText,
     caption,
+    description,
     condition,
     verified,
     "imageUrl": image.asset->url,

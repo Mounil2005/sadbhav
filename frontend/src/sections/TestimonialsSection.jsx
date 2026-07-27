@@ -122,11 +122,16 @@ function VideoTestimonialCard({ review, onClick }) {
         </div>
 
         {/* Bottom info */}
-        {(review.caption || review.condition) && (
-          <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent p-3 pt-10">
-            <div className="text-white/80 text-[11px]">{review.caption || review.condition}</div>
-          </div>
-        )}
+        <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-3 pt-10">
+          {(review.caption || review.condition) && (
+            <div className="text-white text-[11px] font-sans font-medium leading-snug line-clamp-2">
+              {review.caption || review.condition}
+            </div>
+          )}
+          {review.description && (
+            <div className="text-medical-300 text-[10px] font-sans mt-1">See more →</div>
+          )}
+        </div>
       </div>
     </button>
   )
@@ -134,7 +139,12 @@ function VideoTestimonialCard({ review, onClick }) {
 
 function VideoModal({ review, onClose, onPrev, onNext, hasPrev, hasNext }) {
   const videoRef = useRef(null)
+  const [expanded, setExpanded] = useState(false)
   const videoSrc = review.videoUrl ?? review.videoFileUrl ?? null
+
+  useEffect(() => {
+    setExpanded(false)
+  }, [review._id])
 
   useEffect(() => {
     function onKey(e) {
@@ -198,13 +208,30 @@ function VideoModal({ review, onClose, onPrev, onNext, hasPrev, hasNext }) {
           )}
         </div>
 
-        {/* Patient info */}
-        <div className="mt-3 text-center">
-          {(review.caption || review.condition) && (
-            <div className="text-white/60 text-xs">{review.caption || review.condition}</div>
-          )}
-          {review.rating && (
-            <div className="mt-1 text-amber-400 text-sm">{'★'.repeat(review.rating)}</div>
+        {/* Patient info + description */}
+        <div className="mt-3">
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              {(review.caption || review.condition) && (
+                <div className="text-white/70 text-xs">{review.caption || review.condition}</div>
+              )}
+              {review.rating && (
+                <div className="text-amber-400 text-sm mt-0.5">{'★'.repeat(review.rating)}</div>
+              )}
+            </div>
+            {review.description && (
+              <button
+                onClick={() => setExpanded((v) => !v)}
+                className="text-medical-300 text-xs font-sans font-medium flex-shrink-0 hover:text-medical-200 transition-colors"
+              >
+                {expanded ? 'See less ↑' : 'See more ↓'}
+              </button>
+            )}
+          </div>
+          {review.description && expanded && (
+            <p className="mt-3 text-white/70 text-xs leading-relaxed border-t border-white/10 pt-3">
+              {review.description}
+            </p>
           )}
         </div>
 
