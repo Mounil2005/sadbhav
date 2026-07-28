@@ -449,6 +449,52 @@ function ReviewForm({ onSubmitted }) {
   )
 }
 
+function AllStoriesOverlay({ reviews, onClose, onPlayVideo }) {
+  useEffect(() => {
+    function onKey(e) {
+      if (e.key === 'Escape') onClose()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [onClose])
+
+  return (
+    <div className="fixed inset-0 z-[90] bg-white flex flex-col">
+      {/* Sticky header */}
+      <div className="flex-shrink-0 border-b border-warm-100 bg-white/95 backdrop-blur-sm px-4 sm:px-6 py-4 flex items-center justify-between">
+        <div>
+          <h2 className="font-display font-semibold text-xl text-navy-800">Patient Stories</h2>
+          <p className="text-xs text-warm-400 font-sans mt-0.5">
+            {reviews.length} video testimonial{reviews.length !== 1 ? 's' : ''}
+          </p>
+        </div>
+        <button
+          onClick={onClose}
+          className="w-10 h-10 rounded-full bg-warm-50 hover:bg-warm-100 flex items-center justify-center text-warm-600 transition-colors"
+          aria-label="Close"
+        >
+          <X size={20} />
+        </button>
+      </div>
+
+      {/* Scrollable grid */}
+      <div className="flex-1 overflow-y-auto">
+        <div className="px-4 sm:px-6 py-6 max-w-7xl mx-auto">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
+            {reviews.map((r, i) => (
+              <VideoTestimonialCard
+                key={r._id}
+                review={r}
+                onClick={() => onPlayVideo(i)}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 async function fetchGoogleReviews() {
   try {
     const res = await fetch('/api/google-reviews')
@@ -468,6 +514,7 @@ export default function TestimonialsSection({
   const [googleReviews, setGoogleReviews] = useState([])
   const [visitorCount, setVisitorCount] = useState(null)
   const [videoModalIndex, setVideoModalIndex] = useState(null)
+  const [showAllStories, setShowAllStories] = useState(false)
 
   useEffect(() => {
     fetchApprovedReviews().then(setSanityReviews)
@@ -524,9 +571,17 @@ export default function TestimonialsSection({
         {videoReviews.length > 0 && (
           <RevealWrapper>
             <div className="mb-12 sm:mb-16">
-              <h3 className="font-display font-semibold text-xl sm:text-2xl text-navy-700 mb-5">
-                Patient Stories
-              </h3>
+              <div className="flex items-center justify-between mb-5">
+                <h3 className="font-display font-semibold text-xl sm:text-2xl text-navy-700">
+                  Patient Stories
+                </h3>
+                <button
+                  onClick={() => setShowAllStories(true)}
+                  className="text-sm font-sans font-medium text-medical-500 hover:text-medical-600 transition-colors flex items-center gap-1"
+                >
+                  View all <span aria-hidden="true">→</span>
+                </button>
+              </div>
               <div className="flex gap-3 overflow-x-auto pb-3 snap-x snap-mandatory -mx-4 sm:-mx-6 px-4 sm:px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 {videoReviews.map((r, i) => (
                   <div key={r._id} className="snap-start flex-shrink-0">
@@ -590,7 +645,16 @@ export default function TestimonialsSection({
       </div>
     </section>
 
-    {/* Video modal */}
+    {/* All Patient Stories overlay */}
+    {showAllStories && (
+      <AllStoriesOverlay
+        reviews={videoReviews}
+        onClose={() => setShowAllStories(false)}
+        onPlayVideo={(i) => setVideoModalIndex(i)}
+      />
+    )}
+
+    {/* Video modal — z-[100] sits above the overlay */}
     {videoModalIndex !== null && videoReviews.length > 0 && (
       <VideoModal
         review={videoReviews[videoModalIndex]}
