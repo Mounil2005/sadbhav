@@ -52,17 +52,19 @@ function ReviewItem({ name, condition, review, rating, verified, imageUrl, reply
       )}
       <div className="p-5 sm:p-6">
         <div className="flex items-center justify-between gap-2 mb-3">
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2.5 min-w-0 flex-1">
             {profilePhotoUrl ? (
-              <img src={profilePhotoUrl} alt="Reviewer" className="w-9 h-9 rounded-full object-cover flex-shrink-0" referrerPolicy="no-referrer" />
+              <img src={profilePhotoUrl} alt="Reviewer" className="w-10 h-10 rounded-full object-cover flex-shrink-0" referrerPolicy="no-referrer" />
             ) : (
-              <div className="w-9 h-9 rounded-full bg-medical-100 flex items-center justify-center text-medical-600 font-sans font-bold text-sm flex-shrink-0">
+              <div className="w-10 h-10 rounded-full bg-medical-100 flex items-center justify-center text-medical-600 font-sans font-bold text-sm flex-shrink-0">
                 {isGoogle && name ? name[0].toUpperCase() : 'P'}
               </div>
             )}
-            <div>
-              {isGoogle && name && <div className="text-sm font-sans font-medium text-navy-700">{name}</div>}
-              {condition && <div className="text-xs text-warm-400">{condition}</div>}
+            <div className="min-w-0">
+              {isGoogle && name && (
+                <div className="text-sm font-sans font-semibold text-navy-800 truncate">{name}</div>
+              )}
+              {condition && <div className="text-xs text-warm-400 truncate">{condition}</div>}
             </div>
           </div>
           {isGoogle ? <GoogleBadge /> : verified ? <VerifiedBadge /> : null}
@@ -631,7 +633,7 @@ export default function TestimonialsSection({
             style={{ width: 'max-content' }}
           >
             {[...displayed, ...displayed].map((item, i) => (
-              <div key={`${item.id}-${i}`} className="flex-shrink-0 w-72 sm:w-80">
+              <div key={`${item.id}-${i}`} className="flex-shrink-0 w-80 sm:w-96">
                 <ReviewItem {...item} />
               </div>
             ))}
