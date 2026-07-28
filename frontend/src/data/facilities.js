@@ -46,7 +46,7 @@ export const FACILITIES = [
     detail:
       'On-site spirometry, nebulisation, and pulmonary function testing for accurate respiratory diagnosis.',
     spec: 'In-house diagnostics',
-    imageUrl: '/Pulmonary Tests.jpeg',
+    imageUrl: '/pulmonary care.png',
     bgGradient: null,
   },
 ]
