@@ -132,6 +132,7 @@ export const review = defineType({
       title: 'Replied At',
       type: 'datetime',
       group: 'moderation',
+      hidden: ({document}) => document?.reviewType === 'video',
     }),
     defineField({
       name: 'submittedAt',
