@@ -136,10 +136,11 @@ export const review = defineType({
     }),
     defineField({
       name: 'submittedAt',
-      title: 'Submitted At',
+      title: 'Date',
       type: 'datetime',
       group: 'moderation',
-      readOnly: true,
+      description: 'Set this to the date of the review/testimonial. Used to sort newest first.',
+      initialValue: () => new Date().toISOString(),
     }),
   ],
   orderings: [
