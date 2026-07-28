@@ -276,7 +276,6 @@ function VideoModal({ review, onClose, onPrev, onNext, hasPrev, hasNext }) {
           )}
         </div>
       </div>
-    </div>
   )
 }
 
