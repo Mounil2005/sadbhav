@@ -161,19 +161,24 @@ export const review = defineType({
   preview: {
     select: {
       reviewType: 'reviewType',
+      caption: 'caption',
+      reviewText: 'reviewText',
+      condition: 'condition',
       rating: 'rating',
       approved: 'approved',
       submittedAt: 'submittedAt',
       media: 'image',
     },
-    prepare({reviewType, rating, approved, submittedAt, media}) {
+    prepare({reviewType, caption, reviewText, condition, rating, approved, submittedAt, media}) {
       const stars = '★'.repeat(rating ?? 0)
       const date = submittedAt ? new Date(submittedAt).toLocaleDateString('en-IN') : ''
-      const status = approved ? '✅ Visible' : '🚫 Hidden'
-      const type = reviewType === 'video' ? '🎥 Video' : '💬 Text'
+      const status = approved ? '✅' : '🚫'
+      const label = reviewType === 'video'
+        ? (caption || condition || 'Video Testimonial')
+        : (reviewText ? reviewText.slice(0, 50) + (reviewText.length > 50 ? '…' : '') : 'Text Review')
       return {
-        title: `${type} Review`,
-        subtitle: `${stars} · ${status} · ${date}`,
+        title: label,
+        subtitle: `${reviewType === 'video' ? '🎥' : '💬'} ${stars} · ${status} · ${date}`,
         media,
       }
     },
