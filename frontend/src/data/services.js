@@ -9,7 +9,7 @@ export const SERVICES = [
       'Comprehensive evaluation and management of all lung conditions including infections, fibrosis, and occupational lung diseases.',
     tag: 'Respiratory',
     featured: true,
-    imageUrl: '/Pulmonary Tests.jpeg',
+    imageUrl: '/pulmonary care.jpeg',
   },
   {
     id: 'icu-critical-care',
