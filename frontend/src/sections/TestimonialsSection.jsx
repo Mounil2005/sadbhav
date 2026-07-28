@@ -41,7 +41,7 @@ function GoogleBadge() {
   )
 }
 
-function ReviewItem({ condition, review, rating, verified, imageUrl, reply, source, profilePhotoUrl }) {
+function ReviewItem({ name, condition, review, rating, verified, imageUrl, reply, source, profilePhotoUrl }) {
   const isGoogle = source === 'google'
   return (
     <article className="bg-white rounded-2xl border border-warm-100 shadow-sm overflow-hidden">
@@ -57,10 +57,11 @@ function ReviewItem({ condition, review, rating, verified, imageUrl, reply, sour
               <img src={profilePhotoUrl} alt="Reviewer" className="w-9 h-9 rounded-full object-cover flex-shrink-0" referrerPolicy="no-referrer" />
             ) : (
               <div className="w-9 h-9 rounded-full bg-medical-100 flex items-center justify-center text-medical-600 font-sans font-bold text-sm flex-shrink-0">
-                P
+                {isGoogle && name ? name[0].toUpperCase() : 'P'}
               </div>
             )}
             <div>
+              {isGoogle && name && <div className="text-sm font-sans font-medium text-navy-700">{name}</div>}
               {condition && <div className="text-xs text-warm-400">{condition}</div>}
             </div>
           </div>
@@ -591,6 +592,21 @@ export default function TestimonialsSection({
                     />
                   </div>
                 ))}
+                {/* View all tile — always at the end of the scroll row */}
+                <div className="snap-start flex-shrink-0 flex items-center pl-1 pr-4 sm:pr-6">
+                  <button
+                    onClick={() => setShowAllStories(true)}
+                    className="flex flex-col items-center justify-center gap-2 w-24 text-center group"
+                    style={{ aspectRatio: '9/16', maxHeight: '11rem' }}
+                  >
+                    <div className="w-12 h-12 rounded-full bg-medical-50 border-2 border-medical-200 flex items-center justify-center group-hover:bg-medical-100 transition-colors">
+                      <span className="text-medical-500 text-lg font-sans font-bold">→</span>
+                    </div>
+                    <span className="text-xs font-sans font-medium text-medical-500 group-hover:text-medical-600 transition-colors leading-tight">
+                      View all
+                    </span>
+                  </button>
+                </div>
               </div>
             </div>
           </RevealWrapper>
