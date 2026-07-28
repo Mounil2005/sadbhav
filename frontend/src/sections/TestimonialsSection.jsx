@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { ExternalLink, Play, X, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ExternalLink, Play, X, ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react'
 import StarRating from '../components/ui/StarRating'
 import SectionHeader from '../components/ui/SectionHeader'
 import RevealWrapper from '../components/ui/RevealWrapper'
@@ -144,24 +144,27 @@ function VideoTestimonialCard({ review, onClick }) {
   )
 }
 
-function VideoModal({ review, onClose, onPrev, onNext, hasPrev, hasNext }) {
+function VideoModal({ review, onClose, onPrev, onNext, hasPrev, hasNext, index, total }) {
   const videoRef = useRef(null)
-  const [expanded, setExpanded] = useState(false)
+  const [panelOpen, setPanelOpen] = useState(false)
   const videoSrc = review.videoUrl ?? review.videoFileUrl ?? null
 
   useEffect(() => {
-    setExpanded(false)
+    setPanelOpen(false)
   }, [review._id])
 
   useEffect(() => {
     function onKey(e) {
-      if (e.key === 'Escape') onClose()
-      if (e.key === 'ArrowLeft' && hasPrev) onPrev()
-      if (e.key === 'ArrowRight' && hasNext) onNext()
+      if (e.key === 'Escape') {
+        if (panelOpen) setPanelOpen(false)
+        else onClose()
+      }
+      if (!panelOpen && e.key === 'ArrowLeft' && hasPrev) onPrev()
+      if (!panelOpen && e.key === 'ArrowRight' && hasNext) onNext()
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [onClose, onPrev, onNext, hasPrev, hasNext])
+  }, [onClose, onPrev, onNext, hasPrev, hasNext, panelOpen])
 
   useEffect(() => {
     document.body.style.overflow = 'hidden'
@@ -179,29 +182,47 @@ function VideoModal({ review, onClose, onPrev, onNext, hasPrev, hasNext }) {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/85 backdrop-blur-sm p-2 sm:p-4"
+      className="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center p-4 sm:p-6"
       onClick={(e) => { if (e.target === e.currentTarget) onClose() }}
     >
-      <div className="relative w-full max-w-xs flex flex-col" style={{ maxHeight: '96svh' }}>
+      {/* Close */}
+      <button
+        onClick={onClose}
+        className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
+        aria-label="Close"
+      >
+        <X size={18} />
+      </button>
 
-        {/* Video — capped so caption always fits below */}
-        <div
-          className="relative rounded-2xl overflow-hidden bg-black mx-auto flex-shrink-0"
-          style={{
-            aspectRatio: '9/16',
-            maxHeight: '65svh',
-            maxWidth: 'calc(65svh * 9 / 16)',
-            width: '100%',
-          }}
+      {/* Prev */}
+      {!panelOpen && hasPrev && (
+        <button
+          onClick={onPrev}
+          className="absolute left-3 sm:left-5 z-20 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
+          aria-label="Previous"
         >
-          {/* Close inside video — never clipped on phones */}
-          <button
-            onClick={onClose}
-            className="absolute top-2 right-2 z-20 w-9 h-9 rounded-full bg-black/50 hover:bg-black/70 flex items-center justify-center text-white transition-colors"
-            aria-label="Close"
-          >
-            <X size={16} />
-          </button>
+          <ChevronLeft size={22} />
+        </button>
+      )}
+
+      {/* Next */}
+      {!panelOpen && hasNext && (
+        <button
+          onClick={onNext}
+          className="absolute right-3 sm:right-5 z-20 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
+          aria-label="Next"
+        >
+          <ChevronRight size={22} />
+        </button>
+      )}
+
+      {/* Video card */}
+      <div
+        className="relative bg-black rounded-2xl overflow-hidden shadow-2xl"
+        style={{ height: 'min(88vh, 640px)', aspectRatio: '9/16' }}
+      >
+        {/* Video */}
+        <div className="absolute inset-0">
           {videoSrc && isYouTube(videoSrc) ? (
             <iframe
               src={getYouTubeEmbed(videoSrc)}
@@ -223,59 +244,72 @@ function VideoModal({ review, onClose, onPrev, onNext, hasPrev, hasNext }) {
           )}
         </div>
 
-          {/* Prev / Next — inside video so touch targets stay within the video */}
-          {(hasPrev || hasNext) && (
-            <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between pointer-events-none px-2 z-10">
+        {/* Description panel — slides up over the video */}
+        {review.description && (
+          <div
+            className="absolute inset-x-0 bottom-0 transition-transform duration-300 ease-in-out"
+            style={{ transform: panelOpen ? 'translateY(0)' : 'translateY(100%)' }}
+          >
+            <div className="bg-black/95 rounded-t-2xl max-h-[48vh] flex flex-col">
+              {/* Handle + collapse */}
               <button
-                onClick={onPrev}
-                disabled={!hasPrev}
-                className="pointer-events-auto w-10 h-10 rounded-full bg-black/40 hover:bg-black/60 disabled:opacity-0 flex items-center justify-center text-white transition-colors"
-                aria-label="Previous"
+                onClick={() => setPanelOpen(false)}
+                className="flex items-center justify-center gap-1.5 py-3 w-full text-white/40 hover:text-white/70 transition-colors"
               >
-                <ChevronLeft size={20} />
+                <ChevronDown size={18} />
+                <span className="text-xs font-sans">show less</span>
               </button>
+              {/* Scrollable content */}
+              <div className="overflow-y-auto px-5 pb-6 flex-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                {(review.caption || review.condition) && (
+                  <span className="inline-block text-[10px] font-sans font-semibold px-2.5 py-0.5 rounded-full bg-white/15 text-white/70 mb-3">
+                    {review.caption || review.condition}
+                  </span>
+                )}
+                {review.rating && (
+                  <div className="text-amber-400 text-sm mb-3">{'★'.repeat(review.rating)}</div>
+                )}
+                <p className="text-white/80 text-sm leading-relaxed">{review.description}</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Bottom caption — hidden when panel is open */}
+        <div
+          className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent pt-16 pb-4 px-4 transition-opacity duration-200"
+          style={{ opacity: panelOpen ? 0 : 1, pointerEvents: panelOpen ? 'none' : 'auto' }}
+        >
+          {(review.caption || review.condition) && (
+            <span className="inline-block text-[10px] font-sans font-semibold px-2.5 py-0.5 rounded-full bg-white/15 text-white/80 mb-2">
+              {review.caption || review.condition}
+            </span>
+          )}
+          {review.rating && (
+            <p className="font-display font-bold text-white text-sm leading-snug mb-1.5">
+              {'★'.repeat(review.rating)}
+            </p>
+          )}
+          {review.description && (
+            <div className="text-white/70 text-xs leading-relaxed">
+              <span className="line-clamp-2">{review.description}</span>
               <button
-                onClick={onNext}
-                disabled={!hasNext}
-                className="pointer-events-auto w-10 h-10 rounded-full bg-black/40 hover:bg-black/60 disabled:opacity-0 flex items-center justify-center text-white transition-colors"
-                aria-label="Next"
+                onClick={() => setPanelOpen(true)}
+                className="text-white font-semibold ml-1"
               >
-                <ChevronRight size={20} />
+                ...see more
               </button>
             </div>
           )}
-        </div>
-
-        {/* Caption + description — scrollable, always visible */}
-        <div
-          className="mt-2 overflow-y-auto"
-          style={{ maxHeight: '26svh', WebkitOverflowScrolling: 'touch' }}
-        >
-          <div className="flex items-center justify-between gap-3 px-1 py-2">
-            <div>
-              {(review.caption || review.condition) && (
-                <div className="text-white/80 text-xs font-sans">{review.caption || review.condition}</div>
-              )}
-              {review.rating && (
-                <div className="text-amber-400 text-sm mt-0.5">{'★'.repeat(review.rating)}</div>
-              )}
+          {typeof index === 'number' && typeof total === 'number' && (
+            <div className="flex items-center justify-between mt-3 pt-2 border-t border-white/10">
+              <span className="text-[10px] text-white/40 font-sans">Patient Story</span>
+              <span className="text-[10px] text-white/30 font-sans">{index + 1} / {total}</span>
             </div>
-            {review.description && (
-              <button
-                onClick={() => setExpanded((v) => !v)}
-                className="text-medical-300 text-xs font-sans font-medium flex-shrink-0 hover:text-medical-200 transition-colors py-1 px-2"
-              >
-                {expanded ? 'See less ↑' : 'See more ↓'}
-              </button>
-            )}
-          </div>
-          {review.description && expanded && (
-            <p className="px-1 pb-3 text-white/65 text-xs leading-relaxed border-t border-white/10 pt-2">
-              {review.description}
-            </p>
           )}
         </div>
       </div>
+    </div>
   )
 }
 
@@ -675,6 +709,8 @@ export default function TestimonialsSection({
     {videoModalIndex !== null && videoReviews.length > 0 && (
       <VideoModal
         review={videoReviews[videoModalIndex]}
+        index={videoModalIndex}
+        total={videoReviews.length}
         hasPrev={videoModalIndex > 0}
         hasNext={videoModalIndex < videoReviews.length - 1}
         onClose={() => setVideoModalIndex(null)}
