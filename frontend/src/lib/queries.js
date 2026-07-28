@@ -118,8 +118,9 @@ export async function fetchPostBySlug(slug) {
 }
 
 const APPROVED_REVIEWS_QUERY = `
-  *[_type == "review" && approved == true] | order(submittedAt desc) {
+  *[_type == "review" && approved == true] | order(coalesce(submittedAt, _createdAt) desc) {
     _id,
+    _createdAt,
     rating,
     reviewType,
     reviewText,
