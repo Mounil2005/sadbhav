@@ -123,12 +123,13 @@ export default function Footer() {
           </div>
         </div>
         <div className="max-w-7xl mx-auto px-6 pb-4 text-center text-[11px] font-sans text-white/20">
-          Designed &amp; developed by{' '}
-          <a
-            href="tel:+919327088700"
-            className="text-white/30 hover:text-white/50 transition-colors"
-          >
-            Mounil Kankhara · +91 93270 88700
+          Designed &amp; developed by Mounil Kankhara &middot;{' '}
+          <a href="tel:+919327088700" className="text-white/30 hover:text-white/50 transition-colors">
+            +91 93270 88700
+          </a>
+          {' '}&middot;{' '}
+          <a href="mailto:mounilkankhara@gmail.com" className="text-white/30 hover:text-white/50 transition-colors">
+            mounilkankhara@gmail.com
           </a>
         </div>
       </div>
