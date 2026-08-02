@@ -261,10 +261,15 @@ function VideoModal({ review, onClose, onPrev, onNext, hasPrev, hasNext, index, 
               </button>
               {/* Scrollable content */}
               <div className="overflow-y-auto px-5 pb-6 flex-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                {(review.caption || review.condition) && (
+                {review.condition && (
                   <span className="inline-block text-[10px] font-sans font-semibold px-2.5 py-0.5 rounded-full bg-white/15 text-white/70 mb-3">
-                    {review.caption || review.condition}
+                    {review.condition}
                   </span>
+                )}
+                {(review.caption || review.condition) && (
+                  <h2 className="font-display font-bold text-white text-base leading-snug mb-2">
+                    {review.caption || review.condition}
+                  </h2>
                 )}
                 {review.rating && (
                   <div className="text-amber-400 text-sm mb-3">{'★'.repeat(review.rating)}</div>
@@ -280,14 +285,14 @@ function VideoModal({ review, onClose, onPrev, onNext, hasPrev, hasNext, index, 
           className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent pt-16 pb-4 px-4 transition-opacity duration-200"
           style={{ opacity: panelOpen ? 0 : 1, pointerEvents: panelOpen ? 'none' : 'auto' }}
         >
-          {(review.caption || review.condition) && (
+          {review.condition && (
             <span className="inline-block text-[10px] font-sans font-semibold px-2.5 py-0.5 rounded-full bg-white/15 text-white/80 mb-2">
-              {review.caption || review.condition}
+              {review.condition}
             </span>
           )}
-          {review.rating && (
+          {(review.caption || review.condition) && (
             <p className="font-display font-bold text-white text-sm leading-snug mb-1.5">
-              {'★'.repeat(review.rating)}
+              {review.caption || review.condition}
             </p>
           )}
           {review.description && (
@@ -301,12 +306,12 @@ function VideoModal({ review, onClose, onPrev, onNext, hasPrev, hasNext, index, 
               </button>
             </div>
           )}
-          {typeof index === 'number' && typeof total === 'number' && (
-            <div className="flex items-center justify-between mt-3 pt-2 border-t border-white/10">
-              <span className="text-[10px] text-white/40 font-sans">Patient Story</span>
+          <div className="flex items-center justify-between mt-3 pt-2 border-t border-white/10">
+            <span className="text-amber-400 text-xs">{review.rating ? '★'.repeat(review.rating) : ''}</span>
+            {typeof index === 'number' && typeof total === 'number' && (
               <span className="text-[10px] text-white/30 font-sans">{index + 1} / {total}</span>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </div>
